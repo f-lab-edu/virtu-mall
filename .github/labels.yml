@@ -1,44 +1,44 @@
 - name: "flow: blocked"
   description: "This issue/PR is blocked by another task."
-  color: "#5319e7"
+  color: "5319e7"
 
 - name: "flow: BREAKING CHANGE"
   description: "This issue/PR's changes will conflict with existing features, affecting backwards compatibility."
-  color: "#ff00ff"
+  color: "ff00ff"
 
 - name: "flow: hotfix"
   description: "This issue/PR is impaired and must be proceeded urgently."
-  color: "#ffff00"
+  color: "ffff00"
 
 - name: "flow: pending"
   description: "This issue/PR is being delayed."
-  color: "#4592c7"
+  color: "4592c7"
 
 - name: "flow: urgent"
   description: "This issue/PR must be proceeded urgently."
-  color: "#ffff00"
+  color: "ffff00"
 
 - name: "flow: WIP"
   description: "This issue/PR is still working in progress."
-  color: "#000000"
+  color: "000000"
 
 - name: "type: bug"
   description: "This issue/PR is about a bug."
-  color: "#ff3838"
+  color: "ff3838"
 
 - name: "type: doc"
   description: "This issue/PR is about a documentation."
-  color: "#59fb40"
+  color: "59fb40"
 
 - name: "type: known issue"
   description: "This issue/PR covers an issue we already know, but can't change immediately."
-  color: "#bb5422"
+  color: "bb5422"
 
 - name: "type: release"
   description: "This issue/PR is about a release."
-  color: "#fbca04"
+  color: "fbca04"
 
 - name: "type: suggestion"
   description: "This issue/PR is about a suggestion."
-  color: "#513472"
+  color: "513472"
 
