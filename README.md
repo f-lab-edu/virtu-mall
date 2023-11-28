@@ -10,8 +10,7 @@
 Name    | Version
 --------|---------
 Python  | 3.11
-FastAPI | 0.104.1
-
+Django  | 4.2.7
 
 ### Installation
 
