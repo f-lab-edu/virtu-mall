@@ -1,17 +1,21 @@
 import pytest
-import requests
-import requests_mock
+from django.test import Client
 
 
-def get_health_status():
-    response = requests.get("http://virtumall.com/healthz")
-    return response.json()
+@pytest.fixture
+def client():
+    return Client()
 
 
-def test_healthz_endpoint():
-    with requests_mock.Mocker() as mock:
-        mock.get(
-            "http://virtumall.com/healthz", json={"message": "ok"}, status_code=200
-        )
-        response = get_health_status()
-        assert response["message"] == "ok"
+@pytest.mark.parametrize(
+    "path,expected_status",
+    [
+        ("/healthz", 200),
+        ("/some-other-path", 404),
+    ],
+)
+def test_health_check_middleware(
+    client: Client, path: str, expected_status: int
+) -> None:
+    response = client.get(path)
+    assert response.status_code == expected_status
