@@ -22,14 +22,14 @@ Django  | 4.2.7
 1. 프로젝트 종속성을 설치합니다.
 ```shell
 # Project venv 가 활성화되어있어야 합니다.
-(venv) $ pip install -r requirements/requirements.txt
-(venv) $ python manage.py migrate
+pip install -r requirements/requirements.txt
+python manage.py migrate
 ```
 
 2. 어드민에서 필요한 추가 설정을 위해 관리자 계정 생성 후 서버를 실행합니다.
 ```shell
-(venv) $ python manage.py createsuperuser
-(venv) $ python manage.py runserver
+python manage.py createsuperuser
+python manage.py runserver
 ```
 
 ## Developer guide
