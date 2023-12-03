@@ -12,12 +12,27 @@
 Name    | Version
 --------|---------
 Python  | 3.11
-FastAPI | 0.104.1
-
+Django  | 4.2.7
 
 ### Installation
 
-- TBD.
+0. 애플리케이션 구동에 필요한 환경을 설정합니다.
+- 필요 소프트웨어
+    - Python version >= 3.11 (venv)
+- .env.example 을 참조하여 .env 를 backend 프로젝트 루트에 생성합니다.
+
+1. 프로젝트 종속성을 설치합니다.
+```shell
+# Project venv 가 활성화되어있어야 합니다.
+pip install -r requirements/requirements.txt
+python manage.py migrate
+```
+
+2. 어드민에서 필요한 추가 설정을 위해 관리자 계정 생성 후 서버를 실행합니다.
+```shell
+python manage.py createsuperuser
+python manage.py runserver
+```
 
 ## Developer guide
 
