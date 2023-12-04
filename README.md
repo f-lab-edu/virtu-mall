@@ -52,7 +52,7 @@ docker build -f ./docker/Dockerfile -t aohus/virtu-mall .
 
 2. run docker container
 ```shell
-docker run --rm --name virtumall -e PORT=8000 aohus/virtu-mall:latest
+docker run --rm --name virtumall -p 8000:8000 -e PORT=8000 aohus/virtu-mall:latest
 ```
 
 컨테이너가 실행되면, 브라우저에서 `http://localhost:8000`을 통해 접근할 수 있습니다.
