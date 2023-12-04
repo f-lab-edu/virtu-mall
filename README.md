@@ -16,6 +16,8 @@ Django  | 4.2.7
 
 ### Installation
 
+#### 1. 기존 Python 환경을 이용한 로컬 개발 설정
+
 0. 애플리케이션 구동에 필요한 환경을 설정합니다.
 - 필요 소프트웨어
     - Python version >= 3.11 (venv)
@@ -33,6 +35,19 @@ python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
 ```
+
+#### 2. Docker를 이용한 개발 환경 설정
+0. 애플리케이션 구동에 필요한 환경을 설정합니다.
+- 필요 소프트웨어
+    - Docker >= 24.0.6
+- .env.example 을 참조하여 .env 를 backend 프로젝트 루트에 생성합니다.
+
+1. docker build and run
+```shell
+docker build -f ./docker/Dockerfile -t aohus/virtu-mall .
+docker run --rm --name virtumall -e PORT=8000 aohus/virtu-mall:latest
+```
+
 
 ## Developer guide
 
