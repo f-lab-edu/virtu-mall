@@ -1,5 +1,8 @@
-.github
+.git/
+.github/
 .gitignore
 .pre-commit-config.yaml
 *.md
 *.png
+tests/
+.env.example
