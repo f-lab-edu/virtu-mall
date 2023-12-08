@@ -14,6 +14,9 @@ class User(AbstractUser):
         verbose_name="User account modified at", auto_now=True
     )
 
+    class Meta:
+        db_table = "user"
+
 
 class BuyerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
