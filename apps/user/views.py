@@ -1,39 +1,35 @@
 from django.contrib.auth import authenticate, login, logout
 from rest_framework import status
 from rest_framework.decorators import api_view
-from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
-from apps.user.models import User
-from apps.user.serializers import UserSerializer
+from apps.user.models import BuyerProfile, StoreProfile
+from apps.user.serializers import BuyerProfileSerializer, StoreProfileSerializer
 from utils.permissions import IsOwner
 
 
-class UserList(ListAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
-    permission_classes = [IsAdminUser]
+class BuyerSignUpView(CreateAPIView):
+    queryset = BuyerProfile.objects.all()
+    serializer_class = BuyerProfileSerializer
 
 
-class UserDetail(RetrieveUpdateDestroyAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserSerializer
+class StoreSignUpView(CreateAPIView):
+    queryset = StoreProfile.objects.all()
+    serializer_class = StoreProfileSerializer
+
+
+class BuyProfileDetail(RetrieveUpdateDestroyAPIView):
+    queryset = BuyerProfile.objects.all()
+    serializer_class = BuyerProfileSerializer
     permission_classes = [IsAdminUser | IsOwner]
 
 
-@api_view(["POST"])
-def sign_up_view(request):
-    user = {
-        "username": request.data.get("username"),
-        "password": request.data.get("password"),
-        "name": request.data.get("name"),
-        "address": request.data.get("address"),
-        "phone": request.data.get("phone"),
-        "email": request.data.get("email"),
-    }
-    User.objects.create_user(**user)
-    return Response(status=status.HTTP_201_CREATED)
+class StoreProfileDetail(RetrieveUpdateDestroyAPIView):
+    queryset = StoreProfile.objects.all()
+    serializer_class = StoreProfileSerializer
+    permission_classes = [IsAdminUser | IsOwner]
 
 
 @api_view(["POST"])
