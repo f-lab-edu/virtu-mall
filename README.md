@@ -38,6 +38,8 @@ poetry run python manage.py migrate
 poetry run python manage.py createsuperuser
 poetry run python manage.py runserver
 ```
+서버가 성공적으로 시작되면, 브라우저에서 `http://localhost:8000`을 통해 접근할 수 있습니다.
+
 
 ## Developer guide
 
