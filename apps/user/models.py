@@ -7,12 +7,8 @@ class User(AbstractUser):
     is_seller = models.BooleanField("is seller", default=False)
     address = models.CharField(verbose_name="Address", max_length=255, null=False)
     email = models.EmailField(verbose_name="Email", null=False)
-    created_at = models.DateTimeField(
-        verbose_name="User account created", auto_now_add=True
-    )
-    modified_at = models.DateTimeField(
-        verbose_name="User account modified at", auto_now=True
-    )
+    created_at = models.DateTimeField(verbose_name="User Created At", auto_now_add=True)
+    modified_at = models.DateTimeField(verbose_name="User Modified At", auto_now=True)
 
     class Meta:
         db_table = "user"
