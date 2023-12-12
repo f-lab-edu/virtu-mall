@@ -23,8 +23,12 @@ class BaseProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer()
 
     def create_user_model(
-        self, profile_model: Type[models.Model], validated_data: Dict[str, Any]
+        self,
+        profile_model: Type[models.Model],
+        validated_data: Dict[str, Any],
+        user_field: str,
     ) -> models.Model:
+        validated_data["user"][user_field] = True
         user_data = validated_data.pop("user")
         user = User.objects.create_user(**user_data)
         return profile_model.objects.create(user=user, **validated_data)
@@ -49,8 +53,7 @@ class BaseProfileSerializer(serializers.ModelSerializer):
 
 class BuyerProfileSerializer(BaseProfileSerializer):
     def create(self, validated_data: Dict[str, Any]) -> BuyerProfile:
-        validated_data["user"]["is_buyer"] = True
-        return self.create_user_model(BuyerProfile, validated_data)
+        return self.create_user_model(BuyerProfile, validated_data, "is_buyer")
 
     class Meta:
         model = BuyerProfile
@@ -59,8 +62,7 @@ class BuyerProfileSerializer(BaseProfileSerializer):
 
 class StoreProfileSerializer(BaseProfileSerializer):
     def create(self, validated_data: Dict[str, Any]) -> StoreProfile:
-        validated_data["user"]["is_store"] = True
-        return self.create_user_model(StoreProfile, validated_data)
+        return self.create_user_model(StoreProfile, validated_data, "is_store")
 
     def update(
         self, instance: StoreProfile, validated_data: Dict[str, Any]
