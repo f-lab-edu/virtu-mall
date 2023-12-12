@@ -4,7 +4,7 @@ from django.http import HttpRequest
 from rest_framework import permissions
 from rest_framework.views import View
 
-from apps.user.models import User
+# from apps.user.models import User
 
 
 class IsOwner(permissions.BasePermission):
@@ -17,6 +17,4 @@ class IsOwner(permissions.BasePermission):
         # so we'll always allow GET, HEAD or OPTIONS requests.
 
         # Write permissions are only allowed to the owner of the obj.
-        if isinstance(obj, User):
-            return obj == request.user
         return obj.user == request.user
