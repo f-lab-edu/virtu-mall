@@ -19,21 +19,21 @@ jobs:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-    - name: Build and Push Docker Base Image
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        file: ./docker/Dockerfile.base
-        push: true
-        tags: aohus/virtu-mall-base:latest
+    # - name: Build and Push Docker Base Image
+    #   uses: docker/build-push-action@v2
+    #   with:
+    #     context: .
+    #     file: ./docker/Dockerfile.base
+    #     push: true
+    #     tags: aohus/virtu-mall-base:latest
 
-    - name: Build and Push Docker App Image
-      uses: docker/build-push-action@v2
-      with:
-        context: .
-        file: ./docker/Dockerfile
-        push: true
-        tags: aohus/virtu-mall:latest
+    # - name: Build and Push Docker App Image
+    #   uses: docker/build-push-action@v2
+    #   with:
+    #     context: .
+    #     file: ./docker/Dockerfile
+    #     push: true
+    #     tags: aohus/virtu-mall:latest
     
     - name: Deploy to AWS EC2
       uses: appleboy/ssh-action@master
@@ -42,7 +42,7 @@ jobs:
         username: ${{ secrets.AWS_EC2_USERNAME }}
         key: ${{ secrets.AWS_EC2_SSH_KEY }}
         script: |
-          who am i
+          whoami
           docker pull aohus/virtu-mall
           docker stop virtumall || true
           docker run --rm -dit --name virtumall -p 8000:8000 -e PORT=8000 aohus/virtu-mall:latest
