@@ -8,6 +8,7 @@ from rest_framework.response import Response
 
 from apps.user.models import BuyerProfile, StoreProfile
 from apps.user.serializers import BuyerProfileSerializer, StoreProfileSerializer
+from utils.message import ResponseMessage
 from utils.permissions import IsOwner
 
 
@@ -41,8 +42,7 @@ def login_view(request: HttpRequest) -> Response:
     if user:
         login(request, user)
         return Response(status=status.HTTP_200_OK)
-    else:
-        return Response(status=404, data=dict(message="회원정보가 잘못되었습니다."))
+    return Response(status=404, data=ResponseMessage({"message": "회원정보가 잘못되었습니다."}))
 
 
 @api_view(["POST"])
