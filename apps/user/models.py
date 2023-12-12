@@ -3,8 +3,8 @@ from django.db import models
 
 
 class User(AbstractUser):
-    is_buyer = models.BooleanField(verbose_name="Is Suyer", default=False)
-    is_seller = models.BooleanField(verbose_name="Is Seller", default=False)
+    is_buyer = models.BooleanField(verbose_name="Is Buyer", default=False)
+    is_store = models.BooleanField(verbose_name="Is Store", default=False)
     address = models.CharField(verbose_name="Address", max_length=255, null=False)
     email = models.EmailField(verbose_name="Email", null=False)
     created_at = models.DateTimeField(verbose_name="User Created At", auto_now_add=True)
