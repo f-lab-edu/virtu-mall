@@ -1,13 +1,18 @@
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate
+from django.contrib.auth import login
+from django.contrib.auth import logout
 from django.http import HttpRequest
 from rest_framework import status
 from rest_framework.decorators import api_view
-from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import CreateAPIView
+from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
-from apps.user.models import BuyerProfile, StoreProfile
-from apps.user.serializers import BuyerProfileSerializer, StoreProfileSerializer
+from apps.user.models import BuyerProfile
+from apps.user.models import StoreProfile
+from apps.user.serializers import BuyerProfileSerializer
+from apps.user.serializers import StoreProfileSerializer
 from utils.message import ResponseMessage
 from utils.permissions import IsOwner
 

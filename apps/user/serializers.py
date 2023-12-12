@@ -1,9 +1,13 @@
-from typing import Any, Dict, Type
+from typing import Any
+from typing import Dict
+from typing import Type
 
 from django.db import models
 from rest_framework import serializers
 
-from apps.user.models import BuyerProfile, StoreProfile, User
+from apps.user.models import BuyerProfile
+from apps.user.models import StoreProfile
+from apps.user.models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
