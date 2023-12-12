@@ -28,7 +28,12 @@ class BuyerProfile(models.Model):
 class StoreProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     name = models.CharField(verbose_name="Store Name", max_length=20, null=False)
-    phone = models.CharField(verbose_name="Store Phone Number", max_length=11, null=False)
+    phone = models.CharField(
+        verbose_name="Store Phone Number", max_length=11, null=True
+    )
+    business_number = models.CharField(
+        verbose_name="Business Registration Number", max_length=10, null=True
+    )
 
     class Meta:
         db_table = "store"
