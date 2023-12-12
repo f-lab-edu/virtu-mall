@@ -15,29 +15,48 @@ class UserSerializer(serializers.ModelSerializer):
 class BaseProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer()
 
-    def create_user_profile(self, profile_model, validated_data):
+    def create(self, profile_model, validated_data):
         user_data = validated_data.pop("user")
         user = User.objects.create_user(**user_data)
         return profile_model.objects.create(user=user, **validated_data)
 
+    def update(self, instance, validated_data):
+        instance.name = validated_data.get("name", instance.name)
+        instance.phone = validated_data.get("phone", instance.phone)
+        instance.save()
 
-# TODO: update
+        user_data = validated_data.get("user")
+        user = instance.user
+
+        if user_data:
+            user.username = user_data.get("username", user.username)
+            user.email = user_data.get("email", user.email)
+            user.address = user_data.get("address", user.address)
+            user.save()
+        return instance
+
+
 class BuyerProfileSerializer(BaseProfileSerializer):
     def create(self, validated_data):
         validated_data["user"]["is_buyer"] = True
-        return self.create_user_profile(BuyerProfile, validated_data)
+        return super().create(BuyerProfile, validated_data)
 
     class Meta:
         model = BuyerProfile
         fields = ["user", "name", "phone"]
 
 
-# TODO: update
 class StoreProfileSerializer(BaseProfileSerializer):
     def create(self, validated_data):
         validated_data["user"]["is_seller"] = True
-        return self.create_user_profile(StoreProfile, validated_data)
+        return super().create(StoreProfile, validated_data)
+
+    def update(self, instance, validated_data):
+        instance.business_number = validated_data.get(
+            "business_number", instance.business_number
+        )
+        return super().update(instance, validated_data)
 
     class Meta:
         model = StoreProfile
-        fields = ["user", "name", "phone"]
+        fields = ["user", "name", "phone", "business_number"]
