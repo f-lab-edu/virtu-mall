@@ -15,7 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
 class BaseProfileSerializer(serializers.ModelSerializer):
     user = UserSerializer()
 
-    def create(self, profile_model, validated_data):
+    def create_user_model(self, profile_model, validated_data):
         user_data = validated_data.pop("user")
         user = User.objects.create_user(**user_data)
         return profile_model.objects.create(user=user, **validated_data)
@@ -39,7 +39,7 @@ class BaseProfileSerializer(serializers.ModelSerializer):
 class BuyerProfileSerializer(BaseProfileSerializer):
     def create(self, validated_data):
         validated_data["user"]["is_buyer"] = True
-        return super().create(BuyerProfile, validated_data)
+        return self.create_user_model(BuyerProfile, validated_data)
 
     class Meta:
         model = BuyerProfile
@@ -49,7 +49,7 @@ class BuyerProfileSerializer(BaseProfileSerializer):
 class StoreProfileSerializer(BaseProfileSerializer):
     def create(self, validated_data):
         validated_data["user"]["is_seller"] = True
-        return super().create(StoreProfile, validated_data)
+        return self.create_user_model(StoreProfile, validated_data)
 
     def update(self, instance, validated_data):
         instance.business_number = validated_data.get(
