@@ -1,7 +1,9 @@
 name: Docker Build and Push
-on:
-  push:
-    branches: [ main ]
+# on:
+#   push:
+#     branches: [ main ]
+on: [push]
+
 
 jobs:
   build-and-deploy:
@@ -32,3 +34,15 @@ jobs:
         file: ./docker/Dockerfile
         push: true
         tags: aohus/virtu-mall:latest
+    
+    - name: Deploy to AWS EC2
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.AWS_EC2_HOST }}
+        username: ${{ secrets.AWS_EC2_USERNAME }}
+        key: ${{ secrets.AWS_EC2_SSH_KEY }}
+        script: |
+          who am i
+          docker pull aohus/virtu-mall
+          docker stop virtumall || true
+          docker run --rm -dit --name virtumall -p 8000:8000 -e PORT=8000 aohus/virtu-mall:latest
