@@ -3,8 +3,8 @@ from django.db import models
 
 
 class User(AbstractUser):
-    is_buyer = models.BooleanField("is buyer", default=False)
-    is_seller = models.BooleanField("is seller", default=False)
+    is_buyer = models.BooleanField(verbose_name="Is Suyer", default=False)
+    is_seller = models.BooleanField(verbose_name="Is Seller", default=False)
     address = models.CharField(verbose_name="Address", max_length=255, null=False)
     email = models.EmailField(verbose_name="Email", null=False)
     created_at = models.DateTimeField(verbose_name="User Created At", auto_now_add=True)
@@ -15,7 +15,7 @@ class User(AbstractUser):
 
 
 class BuyerProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     name = models.CharField(verbose_name="Buyer Name", max_length=20, null=False)
     phone = models.CharField(
         verbose_name="Buyer Phone Number", max_length=11, null=False
@@ -26,7 +26,7 @@ class BuyerProfile(models.Model):
 
 
 class StoreProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     name = models.CharField(verbose_name="Store Name", max_length=20, null=False)
     phone = models.CharField(
         verbose_name="Store Phone Number", max_length=11, null=True
