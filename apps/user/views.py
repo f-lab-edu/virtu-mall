@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, login, logout
+from django.http import HttpRequest
 from rest_framework import status
 from rest_framework.decorators import api_view
 from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
@@ -33,7 +34,7 @@ class StoreProfileDetail(RetrieveUpdateDestroyAPIView):
 
 
 @api_view(["POST"])
-def login_view(request):
+def login_view(request: HttpRequest) -> Response:
     username = request.data.get("username")
     password = request.data.get("password")
     user = authenticate(request, username=username, password=password)
@@ -45,6 +46,6 @@ def login_view(request):
 
 
 @api_view(["POST"])
-def logout_view(request):
+def logout_view(request: HttpRequest) -> Response:
     logout(request)
     return Response(status=status.HTTP_200_OK)
