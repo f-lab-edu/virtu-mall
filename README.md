@@ -33,12 +33,29 @@ python manage.py migrate
 python manage.py createsuperuser
 python manage.py runserver
 ```
+서버가 성공적으로 시작되면, 브라우저에서 `http://localhost:8000`을 통해 접근할 수 있습니다.
+
 
 ## Developer guide
 
 ### Docker build
 
-- TBD.
+0. 애플리케이션 구동에 필요한 환경을 설정합니다.
+- 필요 소프트웨어
+    - Docker >= 24.0.6
+- .env.example 을 참조하여 .env 를 backend 프로젝트 루트에 생성합니다.
+
+1. build docker image
+```shell
+docker build -f ./docker/Dockerfile -t aohus/virtu-mall .
+```
+
+2. run docker container
+```shell
+docker run --rm --name virtumall -p 8000:8000 -e PORT=8000 aohus/virtu-mall:latest
+```
+
+컨테이너가 실행되면, 브라우저에서 `http://localhost:8000`을 통해 접근할 수 있습니다.
 
 ### Testing
 
