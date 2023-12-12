@@ -59,7 +59,7 @@ class BuyerProfileSerializer(BaseProfileSerializer):
 
 class StoreProfileSerializer(BaseProfileSerializer):
     def create(self, validated_data: Dict[str, Any]) -> StoreProfile:
-        validated_data["user"]["is_seller"] = True
+        validated_data["user"]["is_store"] = True
         return self.create_user_model(StoreProfile, validated_data)
 
     def update(
