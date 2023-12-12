@@ -18,6 +18,12 @@ jobs:
         username: ${{ secrets.DOCKER_HUB_USERNAME }}
         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
+    - name: Create env file
+      run: |
+        touch .env
+        echo SECRET_KEY=${{secrets.DOT_ENV_FILE}} >> .env
+        cat .env
+
     - name: Build and Push Docker Base Image
       uses: docker/build-push-action@v2
       with:
