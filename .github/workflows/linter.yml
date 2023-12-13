@@ -21,6 +21,7 @@ jobs:
         VALIDATE_PYTHON_FLAKE8: true
         VALIDATE_PYTHON_ISORT: true
         VALIDATE_PYTHON_MYPY: true
+        PYTHON_FLAKE8_CONFIG_FILE: setup.cfg
         PYTHON_ISORT_CONFIG_FILE: pyproject.toml
         PYTHON_MYPY_CONFIG_FILE: pyproject.toml
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
