@@ -12,14 +12,21 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 import os
 from pathlib import Path
+from typing import Any
+from typing import List
+from typing import Optional
+from typing import Union
 
 from django.core.exceptions import ImproperlyConfigured
-from dotenv import find_dotenv, load_dotenv
+from dotenv import find_dotenv
+from dotenv import load_dotenv
 
 load_dotenv(find_dotenv())
 
 
-def get_env_variable(env_key, default=None):
+def get_env_variable(
+    env_key: str, default: Optional[Any] = None
+) -> Union[str, bool, Any]:
     try:
         env_value = os.environ[env_key]
         if env_value in ("True", "False"):
@@ -47,7 +54,7 @@ SECRET_KEY = get_env_variable("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS: List[str] = []
 
 
 # Application definition
