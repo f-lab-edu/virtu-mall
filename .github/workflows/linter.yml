@@ -1,10 +1,6 @@
 name: Lint Code
 
-on:
-  push:
-    branches-ignore: [main]
-  pull_request:
-    branches: [main]
+on: [pull_request]
 
 jobs:
   super-lint:
@@ -23,4 +19,3 @@ jobs:
         VALIDATE_PYTHON_FLAKE8: true
         VALIDATE_PYTHON_ISORT: true
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
