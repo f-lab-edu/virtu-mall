@@ -14,8 +14,7 @@ import os
 from pathlib import Path
 
 from django.core.exceptions import ImproperlyConfigured
-from dotenv import find_dotenv
-from dotenv import load_dotenv
+from dotenv import find_dotenv, load_dotenv
 
 load_dotenv(find_dotenv())
 
@@ -103,11 +102,14 @@ AUTH_USER_MODEL = "user.User"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+        "ENGINE": "django.db.backends.mysql",
+        "HOST": get_env_variable("DB_HOST"),
+        "PORT": get_env_variable("DB_PORT"),
+        "NAME": get_env_variable("DB_NAME"),
+        "USER": get_env_variable("DB_USER"),
+        "PASSWORD": get_env_variable("DB_PASSWORD"),
+    },
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
