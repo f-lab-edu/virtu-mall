@@ -1,6 +1,8 @@
 from typing import Callable
 
-from django.http import HttpRequest, HttpResponse, JsonResponse
+from django.http import HttpRequest
+from django.http import HttpResponse
+from django.http import JsonResponse
 
 
 class HealthCheckMiddleware:
