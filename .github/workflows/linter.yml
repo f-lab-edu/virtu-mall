@@ -15,13 +15,10 @@ jobs:
       uses: github/super-linter@v5
       env:
         DEFAULT_BRANCH: main
-        LINTER_RULES_PATH: .
+        LINTER_RULES_PATH: .github/configs
         VALIDATE_ALL_CODEBASE: false
         VALIDATE_PYTHON_BLACK: true
         VALIDATE_PYTHON_FLAKE8: true
         VALIDATE_PYTHON_ISORT: true
         VALIDATE_PYTHON_MYPY: true
-        PYTHON_FLAKE8_CONFIG_FILE: setup.cfg
-        PYTHON_ISORT_CONFIG_FILE: pyproject.toml
-        PYTHON_MYPY_CONFIG_FILE: pyproject.toml
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
