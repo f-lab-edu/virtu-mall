@@ -49,4 +49,5 @@ jobs:
         script: |
           docker pull aohus/virtu-mall
           docker stop virtumall || true
-          docker run --rm -dit --name virtumall -p 8000:8000 -e PORT=8000 aohus/virtu-mall
+          docker rm virtumall || true
+          docker run -dit --name virtumall -p 8000:8000 -e PORT=8000 aohus/virtu-mall
