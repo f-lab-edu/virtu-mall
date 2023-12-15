@@ -29,13 +29,13 @@ class StoreSignUpView(CreateAPIView):
 class BuyProfileDetail(RetrieveUpdateDestroyAPIView):
     queryset = BuyerProfile.objects.all()
     serializer_class = BuyerProfileSerializer
-    permission_classes = IsAdminOrOwner
+    permission_classes = [IsAdminOrOwner]
 
 
 class StoreProfileDetail(RetrieveUpdateDestroyAPIView):
     queryset = StoreProfile.objects.all()
     serializer_class = StoreProfileSerializer
-    permission_classes = IsAdminOrOwner
+    permission_classes = [IsAdminOrOwner]
 
 
 @api_view(["POST"])

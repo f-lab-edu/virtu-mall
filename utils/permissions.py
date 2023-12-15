@@ -4,8 +4,6 @@ from django.http import HttpRequest
 from rest_framework import permissions
 from rest_framework.views import View
 
-# from apps.user.models import User
-
 
 class IsAdminOrOwner(permissions.BasePermission):
     """
@@ -19,13 +17,13 @@ class IsAdminOrOwner(permissions.BasePermission):
 
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
-    """
-    Object-level permission to only allow owners of an object to edit it.
-    Assumes the model instance has an `owner` attribute.
-    """
-
     def has_object_permission(self, request: HttpRequest, view: View, obj: Any) -> bool:
         if request.method in permissions.SAFE_METHODS:
             return True
+        return obj.store_id == request.user.id
 
-        return obj.owner == request.user
+
+class IsStore(permissions.BasePermission):
+    def has_permission(self, request, view):
+        print("permission")
+        return request.user.is_store
