@@ -24,6 +24,5 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
 
 
 class IsStore(permissions.BasePermission):
-    def has_permission(self, request, view):
-        print("permission")
+    def has_permission(self, request: HttpRequest, view: View) -> bool:
         return request.user.is_store
