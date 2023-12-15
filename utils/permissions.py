@@ -7,14 +7,25 @@ from rest_framework.views import View
 # from apps.user.models import User
 
 
-class IsOwner(permissions.BasePermission):
+class IsAdminOrOwner(permissions.BasePermission):
     """
     Custom permission to only allow owners of an object to edit it.
     """
 
     def has_object_permission(self, request: HttpRequest, view: View, obj: Any) -> bool:
-        # Read permissions are allowed to any request,
-        # so we'll always allow GET, HEAD or OPTIONS requests.
+        is_admin = request.user and request.user.is_staff
+        is_owner = obj.user == request.user
+        return is_admin or is_owner
 
-        # Write permissions are only allowed to the owner of the obj.
-        return obj.user == request.user
+
+class IsOwnerOrReadOnly(permissions.BasePermission):
+    """
+    Object-level permission to only allow owners of an object to edit it.
+    Assumes the model instance has an `owner` attribute.
+    """
+
+    def has_object_permission(self, request: HttpRequest, view: View, obj: Any) -> bool:
+        if request.method in permissions.SAFE_METHODS:
+            return True
+
+        return obj.owner == request.user
