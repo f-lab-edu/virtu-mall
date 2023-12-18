@@ -21,7 +21,7 @@ jobs:
     - name: Create env file
       run: |
         touch .env
-        echo SECRET_KEY=${{secrets.DOT_ENV_FILE}} >> .env
+        echo ${{secrets.DOT_ENV_FILE}} >> .env
         cat .env
 
     - name: Build and Push Docker Base Image
