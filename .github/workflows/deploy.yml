@@ -1,7 +1,7 @@
 name: Docker Build and Push
-on:
-  push:
-    branches: [ main ]
+on: [push]
+  # push:
+  #   branches: [ main ]
 
 
 jobs:
@@ -21,7 +21,7 @@ jobs:
     - name: Create env file
       run: |
         touch .env
-        echo SECRET_KEY=${{secrets.DOT_ENV_FILE}} >> .env
+        echo ${{secrets.DOT_ENV_FILE}} >> .env
         cat .env
 
     - name: Build and Push Docker Base Image
@@ -49,4 +49,5 @@ jobs:
         script: |
           docker pull aohus/virtu-mall
           docker stop virtumall || true
-          docker run --rm -dit --name virtumall -p 8000:8000 -e PORT=8000 aohus/virtu-mall
+          docker rm virtumall || true
+          docker run -dit --name virtumall -p 8000:8000 -e PORT=8000 aohus/virtu-mall
