@@ -13,8 +13,7 @@ RUN poetry install
 # will become mountpoint of our code
 # WORKDIR /usr/src/app
 COPY . /opt/pysetup
-RUN ls -al
-RUN cat .env
+COPY .env /opt/pysetup/.env
 COPY docker/run_server.sh /opt/pysetup/run_server.sh
 
 EXPOSE 8000
