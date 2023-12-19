@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from rest_framework.parsers import MultiPartParser
 from rest_framework.viewsets import ModelViewSet
 
@@ -11,3 +13,7 @@ class ProductViewSet(ModelViewSet):
     serializer_class = ProductSerializer
     permission_classes = [IsOwnerOrReadOnly]
     parser_classes = (MultiPartParser,)
+
+    def perform_destroy(self, instance):
+        setattr(instance, "deleted_at", datetime.utcnow())
+        instance.save()

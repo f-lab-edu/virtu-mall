@@ -48,6 +48,9 @@ class Product(models.Model):
     modified_at = models.DateTimeField(
         verbose_name="Product Modified At", auto_now=True
     )
+    deleted_at = models.DateTimeField(
+        verbose_name="Product Deleted At", default=None, null=True
+    )
 
     class Meta:
         db_table = "product"
