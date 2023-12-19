@@ -10,9 +10,9 @@ from apps.product.models import Product
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
+        fields = "__all__"
         model = Product
         read_only_fields = ("store",)
-        exclude = ("deleted_at",)
 
     def create(self, validated_data: Dict[str, Any]) -> Any:
         if self.context["request"].user.is_buyer:
