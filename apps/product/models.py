@@ -16,10 +16,16 @@ class Category(models.Model):
         db_table = "category"
 
 
+def product_image_path(instance, filename):
+    # file will be uploaded to MEDIA_ROOT/
+    return f"store/{instance.store.user_id}/product/{instance.name}/{filename}"
+
+
 class Product(models.Model):
     name = models.CharField(verbose_name="Product Name", max_length=50, null=False)
     price = models.IntegerField(verbose_name="Price(₩)", null=False)
     stock = models.IntegerField(verbose_name="Product Quantity", default=0, null=False)
+    image = models.ImageField(upload_to=product_image_path, default=None, null=True)
     store = models.ForeignKey(
         StoreProfile,
         verbose_name="Product Owner",
@@ -45,3 +51,4 @@ class Product(models.Model):
 
     class Meta:
         db_table = "product"
+        unique_together = ("name", "store")

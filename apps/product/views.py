@@ -1,3 +1,4 @@
+from rest_framework.parsers import MultiPartParser
 from rest_framework.viewsets import ModelViewSet
 
 from apps.product.models import Product
@@ -9,3 +10,4 @@ class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     permission_classes = [IsOwnerOrReadOnly]
+    parser_classes = (MultiPartParser,)
