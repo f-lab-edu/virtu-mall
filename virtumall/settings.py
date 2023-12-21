@@ -14,7 +14,8 @@ import os
 from pathlib import Path
 
 from django.core.exceptions import ImproperlyConfigured
-from dotenv import find_dotenv, load_dotenv
+from dotenv import find_dotenv
+from dotenv import load_dotenv
 
 load_dotenv(find_dotenv())
 
@@ -63,6 +64,7 @@ INSTALLED_APPS = [
     "utils",
     "apps.user",
     "apps.product",
+    "apps.cart",
 ]
 
 MIDDLEWARE = [
@@ -94,11 +96,6 @@ TEMPLATES = [
     },
 ]
 
-REST_FRAMEWORK = {
-    "DEFAULT_PARSER_CLASSES": [
-        "rest_framework.parsers.MultiPartParser",
-    ]
-}
 
 WSGI_APPLICATION = "virtumall.wsgi.application"
 
