@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from django.db.models.query import QuerySet
 from rest_framework.parsers import MultiPartParser
 from rest_framework.viewsets import ModelViewSet
 
@@ -14,6 +15,6 @@ class ProductViewSet(ModelViewSet):
     permission_classes = [IsOwnerOrReadOnly]
     parser_classes = (MultiPartParser,)
 
-    def perform_destroy(self, instance):
+    def perform_destroy(self, instance: QuerySet) -> None:
         setattr(instance, "deleted_at", datetime.utcnow())
         instance.save()

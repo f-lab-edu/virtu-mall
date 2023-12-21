@@ -24,7 +24,9 @@ def product_image_path(instance, filename):
 class Product(models.Model):
     name = models.CharField(verbose_name="Product Name", max_length=50, null=False)
     price = models.IntegerField(verbose_name="Price(₩)", null=False)
-    stock = models.IntegerField(verbose_name="Product Quantity", default=0, null=False)
+    stock = models.PositiveIntegerField(
+        verbose_name="Product Quantity", default=0, null=False
+    )
     image = models.ImageField(upload_to=product_image_path, default=None, null=True)
     store = models.ForeignKey(
         StoreProfile,
