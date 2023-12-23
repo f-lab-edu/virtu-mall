@@ -26,7 +26,7 @@ load_dotenv(find_dotenv())
 
 def get_env_variable(
     env_key: str, default: Optional[Any] = None
-) -> Union[str, bool, Any]:
+) -> str | bool | Any:
     try:
         env_value = os.environ[env_key]
         if env_value in ("True", "False"):
