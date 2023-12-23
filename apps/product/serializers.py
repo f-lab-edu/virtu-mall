@@ -12,12 +12,12 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         fields = "__all__"
         model = Product
-        read_only_fields = ("store",)
+        read_only_fields = ("user",)
 
     def create(self, validated_data: Dict[str, Any]) -> Any:
         if self.context["request"].user.is_buyer:
             raise PermissionDenied
-        validated_data["store"] = self.context["request"].user.storeprofile
+        validated_data["user"] = self.context["request"].user
         return super().create(validated_data)
 
 
