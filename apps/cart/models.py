@@ -1,15 +1,14 @@
 from django.db import models
 
 from apps.product.models import Product
-from apps.user.models import BuyerProfile
+from apps.user.models import User
 
 
 class Cart(models.Model):
     user = models.ForeignKey(
-        BuyerProfile,
-        verbose_name="Buyer ID",
+        User,
+        verbose_name="User ID",
         related_name="cart_user",
-        to_field="user_id",
         on_delete=models.CASCADE,
         null=False,
     )

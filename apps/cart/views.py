@@ -9,3 +9,6 @@ class CartViewSet(ModelViewSet):
     queryset = Cart.objects.all()
     serializer_class = CartSerializer
     permission_classes = [IsAdminOrOwner]
+
+    def get_queryset(self):
+        return self.queryset.filter(user=self.request.user)
