@@ -11,14 +11,17 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
+from typing import Any
+from typing import Optional
 
 from django.core.exceptions import ImproperlyConfigured
-from dotenv import find_dotenv, load_dotenv
+from dotenv import find_dotenv
+from dotenv import load_dotenv
 
 load_dotenv(find_dotenv())
 
 
-def get_env_variable(env_key, default=None):
+def get_env_variable(env_key: str, default: Optional[Any] = None) -> str | bool | Any:
     try:
         env_value = os.environ[env_key]
         if env_value in ("True", "False"):

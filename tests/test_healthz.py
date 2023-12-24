@@ -3,7 +3,7 @@ from django.test import Client
 
 
 @pytest.fixture
-def client():
+def client() -> Client:
     return Client()
 
 
