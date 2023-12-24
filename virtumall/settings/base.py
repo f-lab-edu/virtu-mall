@@ -11,11 +11,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
-from pathlib import Path
 from typing import Any
-from typing import List
 from typing import Optional
-from typing import Union
 
 from django.core.exceptions import ImproperlyConfigured
 from dotenv import find_dotenv
@@ -24,9 +21,7 @@ from dotenv import load_dotenv
 load_dotenv(find_dotenv())
 
 
-def get_env_variable(
-    env_key: str, default: Optional[Any] = None
-) -> str | bool | Any:
+def get_env_variable(env_key: str, default: Optional[Any] = None) -> str | bool | Any:
     try:
         env_value = os.environ[env_key]
         if env_value in ("True", "False"):
@@ -41,9 +36,8 @@ def get_env_variable(
         return default
 
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+# Build paths inside the project like this: os.path.join(BASE_DIR, ...)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -106,7 +100,7 @@ WSGI_APPLICATION = "virtumall.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "NAME": os.path.join(BASE_DIR, "db.sqlite3"),
     }
 }
 
