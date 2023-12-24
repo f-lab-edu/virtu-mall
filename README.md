@@ -69,7 +69,7 @@ docker run --rm --name virtumall -p 8000:8000 -e PORT=8000 aohus/virtu-mall:late
 ### Linting
 Name    | Version | Description
 --------|---------|----------------
-Black   | 23.11.0 | Formats Python code adhering to our style guidelines.
-Isort   | 5.12.0  | Sorts imports alphabetically and automatically separates them into sections.
+Black   | 23.12.0 | Formats Python code adhering to our style guidelines.
+Isort   | 5.13.1  | Sorts imports alphabetically and automatically separates them into sections.
 Flake8  | 6.1.0   | Checks for PEP 8 compliance and other coding standards.
 mypy    | 1.7.1   | Static type checker for Python.
