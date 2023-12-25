@@ -21,7 +21,8 @@ warn_no_return = true
 exclude = ["manage.py"]
 
 [tool.pytest]
-DJANGO_SETTINGS_MODULE = "virtumall.settings"
+DJANGO_SETTINGS_MODULE = "virtumall.settings.development"
+
 [tool.poetry]
 name = "virtu-mall"
 version = "0.1.0"

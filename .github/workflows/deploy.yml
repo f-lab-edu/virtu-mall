@@ -1,7 +1,9 @@
 name: Docker Build and Push
-on:
-  push:
-    branches: [ main ]
+# on:
+#   push:
+#     branches: [ main ]
+
+on: [push]
 
 jobs:
   build-and-deploy:
@@ -37,6 +39,7 @@ jobs:
         file: ./docker/Dockerfile
         push: true
         tags: aohus/virtu-mall:latest
+        no-cache: true
     
     - name: Deploy to AWS EC2
       uses: appleboy/ssh-action@master
