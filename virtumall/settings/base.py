@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
+from pathlib import Path
 from typing import Any
 from typing import Optional
 
@@ -37,7 +38,7 @@ def get_env_variable(env_key: str, default: Optional[Any] = None) -> str | bool 
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = Path(__file__).resolve().parents[2]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -99,13 +100,9 @@ WSGI_APPLICATION = "virtumall.wsgi.application"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "HOST": get_env_variable("DB_HOST"),
-        "PORT": get_env_variable("DB_PORT"),
-        "NAME": get_env_variable("DB_NAME"),
-        "USER": get_env_variable("DB_USER"),
-        "PASSWORD": get_env_variable("DB_PASSWORD"),
-    },
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "db.sqlite3",
+    }
 }
 
 # Password validation
