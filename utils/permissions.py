@@ -20,7 +20,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
     def has_object_permission(self, request: HttpRequest, view: View, obj: Any) -> bool:
         if request.method in permissions.SAFE_METHODS:
             return True
-        return obj.store_id == request.user.id
+        return obj.user == request.user
 
 
 class IsStore(permissions.BasePermission):

@@ -1,6 +1,6 @@
 from django.db import models
 
-from apps.user.models import StoreProfile
+from apps.user.models import User
 
 
 class Category(models.Model):
@@ -18,19 +18,20 @@ class Category(models.Model):
 
 def product_image_path(instance, filename: str) -> str:
     # file will be uploaded to MEDIA_ROOT/
-    return f"store/{instance.store.user_id}/product/{instance.name}/{filename}"
+    return f"store/{instance.user}/product/{instance.name}/{filename}"
 
 
 class Product(models.Model):
     name = models.CharField(verbose_name="Product Name", max_length=50, null=False)
     price = models.IntegerField(verbose_name="Price(₩)", null=False)
-    stock = models.IntegerField(verbose_name="Product Quantity", default=0, null=False)
+    stock = models.PositiveIntegerField(
+        verbose_name="Product Quantity", default=0, null=False
+    )
     image = models.ImageField(upload_to=product_image_path, default=None, null=True)
-    store = models.ForeignKey(
-        StoreProfile,
+    user = models.ForeignKey(
+        User,
         verbose_name="Product Owner",
         related_name="store",
-        to_field="user_id",
         on_delete=models.CASCADE,
         null=False,
     )
@@ -54,4 +55,4 @@ class Product(models.Model):
 
     class Meta:
         db_table = "product"
-        unique_together = ("name", "store")
+        unique_together = ("name", "user")
