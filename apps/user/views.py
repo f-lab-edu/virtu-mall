@@ -12,6 +12,7 @@ from apps.user.models import BuyerProfile
 from apps.user.models import StoreProfile
 from apps.user.serializers import BuyerProfileSerializer
 from apps.user.serializers import StoreProfileSerializer
+from apps.wallet.models import Wallet
 from utils.message import ResponseMessage
 from utils.permissions import IsAdminOrOwner
 
@@ -19,6 +20,10 @@ from utils.permissions import IsAdminOrOwner
 class BuyerSignUpView(CreateAPIView):
     queryset = BuyerProfile.objects.all()
     serializer_class = BuyerProfileSerializer
+
+    def perform_create(self, serializer: BuyerProfileSerializer) -> None:
+        buyerprofile = serializer.save()
+        Wallet.objects.create(user=buyerprofile.user)
 
 
 class StoreSignUpView(CreateAPIView):
