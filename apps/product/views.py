@@ -15,9 +15,9 @@ class ProductViewSet(ModelViewSet):
     permission_classes = [IsOwnerOrReadOnly]
     parser_classes = (MultiPartParser,)
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet[Product]:
         return self.queryset.filter(user=self.request.user)
 
-    def perform_destroy(self, instance: QuerySet) -> None:
+    def perform_destroy(self, instance: Product) -> None:
         setattr(instance, "deleted_at", datetime.utcnow())
         instance.save()

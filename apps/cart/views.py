@@ -1,3 +1,4 @@
+from django.db.models.query import QuerySet
 from rest_framework.viewsets import ModelViewSet
 
 from apps.cart.models import Cart
@@ -10,5 +11,5 @@ class CartViewSet(ModelViewSet):
     serializer_class = CartSerializer
     permission_classes = [IsAdminOrOwner]
 
-    def get_queryset(self):
+    def get_queryset(self) -> QuerySet[Cart]:
         return self.queryset.filter(user=self.request.user)
