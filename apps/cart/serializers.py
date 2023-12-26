@@ -33,7 +33,7 @@ class CartSerializer(serializers.ModelSerializer):
 
         with transaction.atomic():
             if quantity > product_stock:
-                raise ValidationError("재고 부족으로 주문 불가")
+                raise ValidationError("Cart update failed: quantity > product_stock")
 
             instance.quantity = quantity
             instance.save()
