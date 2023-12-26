@@ -14,7 +14,7 @@ class ProductSerializer(serializers.ModelSerializer):
         model = Product
         read_only_fields = ("user",)
 
-    def create(self, validated_data: Dict[str, Any]) -> Any:
+    def create(self, validated_data: Dict[str, Any]) -> Product:
         if self.context["request"].user.is_buyer:
             raise PermissionDenied
         validated_data["user"] = self.context["request"].user

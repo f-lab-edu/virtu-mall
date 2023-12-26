@@ -16,13 +16,13 @@ class CartSerializer(serializers.ModelSerializer):
         model = Cart
         read_only_fields = ("user",)
 
-    def create(self, validated_data: Dict[str, Any]) -> Any:
+    def create(self, validated_data: Dict[str, Any]) -> Cart:
         if self.context["request"].user.is_store:
             raise PermissionDenied
         validated_data["user"] = self.context["request"].user
         return super().create(validated_data)
 
-    def update(self, instance: models.Model, validated_data: Dict[str, Any]) -> Any:
+    def update(self, instance: models.Model, validated_data: Dict[str, Any]) -> Cart:
         product_stock = instance.product.stock
         quantity = validated_data.get("quantity", instance.quantity)
         assert quantity < 0
