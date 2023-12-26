@@ -16,7 +16,7 @@ class Category(models.Model):
         db_table = "category"
 
 
-def product_image_path(instance, filename):
+def product_image_path(instance, filename: str) -> str:
     # file will be uploaded to MEDIA_ROOT/
     return f"store/{instance.store.user_id}/product/{instance.name}/{filename}"
 
@@ -46,7 +46,7 @@ class Product(models.Model):
         verbose_name="Product Created At", auto_now_add=True
     )
     modified_at = models.DateTimeField(
-        verbose_name="Product Modified At", auto_now=True
+        verbose_name="Product Modified At", db_index=True, auto_now=True
     )
     deleted_at = models.DateTimeField(
         verbose_name="Product Deleted At", default=None, null=True
