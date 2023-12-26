@@ -22,7 +22,7 @@ class CartSerializer(serializers.ModelSerializer):
         validated_data["user"] = self.context["request"].user
         return super().create(validated_data)
 
-    def update(self, instance: models.Model, validated_data: Dict[str, Any]) -> Cart:
+    def update(self, instance: Cart, validated_data: Dict[str, Any]) -> Cart:
         product_stock = instance.product.stock
         quantity = validated_data.get("quantity", instance.quantity)
         assert quantity < 0
