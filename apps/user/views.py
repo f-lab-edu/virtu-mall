@@ -8,11 +8,11 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 
+from apps.payment.models import Wallet
 from apps.user.models import BuyerProfile
 from apps.user.models import StoreProfile
 from apps.user.serializers import BuyerProfileSerializer
 from apps.user.serializers import StoreProfileSerializer
-from apps.wallet.models import Wallet
 from utils.message import ResponseMessage
 from utils.permissions import IsAdminOrOwner
 

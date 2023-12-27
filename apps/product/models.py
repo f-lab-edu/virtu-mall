@@ -39,7 +39,7 @@ class Product(models.Model):
         Category,
         verbose_name="Category",
         related_name="category",
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         null=False,
     )
     description = models.TextField(verbose_name="Details", null=True)
