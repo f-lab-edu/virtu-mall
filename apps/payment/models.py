@@ -31,6 +31,9 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     total_price = models.PositiveIntegerField(verbose_name="total price", null=False)
     status = models.IntegerField(choices=Status.choices, default=1, null=False)
+    shipping_address = models.CharField(
+        verbose_name="user address", max_length=255, null=False
+    )
     created_at = models.DateTimeField(verbose_name="created at", auto_now_add=True)
     modified_at = models.DateTimeField(verbose_name="modified at", auto_now=True)
 
@@ -46,7 +49,8 @@ class OrderDetail(models.Model):
         Product, on_delete=models.PROTECT, verbose_name="product id", null=False
     )
     quantity = models.PositiveIntegerField(verbose_name="product quantity", null=False)
-    price = models.PositiveIntegerField(verbose_name="price", null=False)
+    unit_price = models.PositiveIntegerField(verbose_name="product price", null=False)
+    total_price = models.PositiveIntegerField(verbose_name="total price", null=False)
     created_at = models.DateTimeField(verbose_name="created at", auto_now_add=True)
     modified_at = models.DateTimeField(verbose_name="modified at", auto_now=True)
 

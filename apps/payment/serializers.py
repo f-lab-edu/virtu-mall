@@ -30,8 +30,8 @@ class OrderSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ["user", "total_price", "order_detail"]
-        read_only_fields = ("user",)
+        fields = ["user", "total_price", "shipping_address", "order_detail"]
+        read_only_fields = ("user", "shipping_address")
 
     def validate(self, attrs: OrderedDict[str, Any]) -> OrderedDict[str, Any]:
         total_price: int = attrs["total_price"]
@@ -49,6 +49,7 @@ class OrderSerializer(serializers.ModelSerializer):
         if not user.is_buyer:
             raise PermissionDenied
         validated_data["user"] = user
+        validated_data["shipping_address"] = user.address
 
         total_price = validated_data.get("total_price")
         order_detail_data = validated_data.pop("order_detail")
