@@ -10,3 +10,13 @@ class RetrieveUpdateViewSet(
     """
 
     pass
+
+
+class ModelWithoutDestroyViewSet(
+    mixins.ListModelMixin,
+    mixins.CreateModelMixin,
+    mixins.RetrieveModelMixin,
+    mixins.UpdateModelMixin,
+    GenericViewSet,
+):
+    pass

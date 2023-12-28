@@ -27,6 +27,7 @@ class Order(models.Model):
         PREPARING = 2
         SHIPPING = 3
         DELIVERED = 4
+        CANCELED = 5
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     total_price = models.PositiveIntegerField(verbose_name="total price", null=False)
