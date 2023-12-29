@@ -1,5 +1,3 @@
-import json
-
 from django.core.exceptions import PermissionDenied
 from django.db.models.query import QuerySet
 from rest_framework import status

@@ -32,17 +32,6 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = ["user", "total_price", "shipping_address", "order_detail"]
         read_only_fields = ("user", "shipping_address")
 
-    def validate(self, attrs: OrderedDict[str, Any]) -> OrderedDict[str, Any]:
-        total_price: int = attrs["total_price"]
-        order_detail: Dict[str, Any] = attrs["order_detail"]
-        price = 0
-        for detail in order_detail:
-            price += detail["total_price"]
-
-        if total_price != price:
-            raise ValidationError("total price wrong")
-        return attrs
-
     def create_order_details(
         self, order: Order, order_detail_data: Dict[str, Any]
     ) -> None:
