@@ -34,7 +34,7 @@ class OrderSerializer(serializers.ModelSerializer):
 
     def validate(self, attrs: OrderedDict[str, Any]) -> OrderedDict[str, Any]:
         total_price: int = attrs["total_price"]
-        order_detail: Dict[str, Any] = attrs["order_detail"]
+        order_detail: dict[str, Any] = attrs["order_detail"]
         price = 0
         for detail in order_detail:
             price += detail["total_price"]
