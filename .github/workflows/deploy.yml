@@ -1,7 +1,9 @@
 name: Docker Build and Push
-on:
-  push:
-    branches: [ main ]
+# on:
+#   push:
+#     branches: [ main ]
+
+on: [push]
 
 jobs:
   build-and-deploy:
@@ -47,6 +49,4 @@ jobs:
         key: ${{ secrets.AWS_EC2_SSH_KEY }}
         script: |
           docker pull aohus/virtu-mall
-          docker stop virtumall || true
-          docker rm virtumall || true
-          docker run -dit --name virtumall -p 8000:8000 -e PORT=8000 aohus/virtu-mall
+          docker-compose up
