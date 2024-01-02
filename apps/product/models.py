@@ -1,16 +1,11 @@
 from django.db import models
+from model_utils.models import TimeStampedModel
 
 from apps.user.models import User
 
 
-class Category(models.Model):
+class Category(TimeStampedModel):
     name = models.CharField(verbose_name="Category Name", max_length=20, null=False)
-    created_at = models.DateTimeField(
-        verbose_name="Category Created At", auto_now_add=True
-    )
-    modified_at = models.DateTimeField(
-        verbose_name="Category Modified At", auto_now=True
-    )
 
     class Meta:
         db_table = "category"
@@ -21,7 +16,7 @@ def product_image_path(instance, filename):
     return f"store/{instance.user}/product/{instance.name}/{filename}"
 
 
-class Product(models.Model):
+class Product(TimeStampedModel):
     name = models.CharField(verbose_name="Product Name", max_length=50, null=False)
     price = models.IntegerField(verbose_name="Price(₩)", null=False)
     stock = models.PositiveIntegerField(
@@ -43,12 +38,6 @@ class Product(models.Model):
         null=False,
     )
     description = models.TextField(verbose_name="Details", null=True)
-    created_at = models.DateTimeField(
-        verbose_name="Product Created At", auto_now_add=True
-    )
-    modified_at = models.DateTimeField(
-        verbose_name="Product Modified At", auto_now=True
-    )
     deleted_at = models.DateTimeField(
         verbose_name="Product Deleted At", default=None, null=True
     )
