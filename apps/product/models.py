@@ -38,7 +38,7 @@ class Product(TimeStampedModel):
         null=False,
     )
     description = models.TextField(verbose_name="Details", null=True)
-    deleted_at = models.DateTimeField(
+    deleted = models.DateTimeField(
         verbose_name="Product Deleted At", default=None, null=True
     )
 

@@ -19,5 +19,5 @@ class ProductViewSet(ModelViewSet):
         return self.queryset.filter(user=self.request.user)
 
     def perform_destroy(self, instance: Product) -> None:
-        setattr(instance, "deleted_at", datetime.utcnow())
+        setattr(instance, "deleted", datetime.utcnow())
         instance.save()

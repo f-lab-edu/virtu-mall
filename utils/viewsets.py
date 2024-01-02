@@ -12,11 +12,8 @@ class RetrieveUpdateViewSet(
     pass
 
 
-class ModelWithoutDestroyViewSet(
-    mixins.ListModelMixin,
+class CreateViewSet(
     mixins.CreateModelMixin,
-    mixins.RetrieveModelMixin,
-    mixins.UpdateModelMixin,
     GenericViewSet,
 ):
     pass

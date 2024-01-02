@@ -1,10 +1,9 @@
 from django.core.exceptions import PermissionDenied
 from django.db.models.query import QuerySet
 from rest_framework import status
-from rest_framework.decorators import api_view
 from rest_framework.exceptions import ValidationError
-from rest_framework.request import Request
 from rest_framework.response import Response
+from rest_framework.viewsets import ModelViewSet
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
 from apps.payment.models import Order
@@ -17,26 +16,36 @@ from apps.payment.services import rollback_pay
 from apps.product.models import Product
 from utils.permissions import IsAdminOrOwner
 from utils.permissions import IsStore
-from utils.viewsets import ModelWithoutDestroyViewSet
-from utils.viewsets import RetrieveUpdateViewSet
+from utils.viewsets import CreateViewSet
 
 
-class WalletViewSet(RetrieveUpdateViewSet):
+class WalletViewSet(CreateViewSet):
     queryset = Wallet.objects.all()
     serializer_class = WalletSerializer
     permission_classes = [IsAdminOrOwner]
 
-    def get_queryset(self) -> QuerySet[Wallet]:
-        return self.queryset.filter(user=self.request.user)
 
-
-class OrderViewSet(ModelWithoutDestroyViewSet):
+class OrderViewSet(ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
     permission_classes = [IsAdminOrOwner]
 
     def get_queryset(self) -> QuerySet[Order]:
-        return self.queryset.filter(user=self.request.user)
+        return self.queryset.filter(user=self.request.user, deleted=None).order_by(
+            "-created"
+        )
+
+    def perform_destroy(self, instance: Order) -> None:
+        if not self.request.user == instance.user:
+            raise PermissionDenied
+
+        if instance.status != instance.Status.RECIEVED:
+            raise ValidationError(
+                f"delete order failed: order status is '{instance.status}'"
+            )
+
+        rollback_pay(instance)
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
 class OrderDetailViewSet(ReadOnlyModelViewSet):
@@ -50,14 +59,14 @@ class OrderDetailViewSet(ReadOnlyModelViewSet):
         return OrderDetail.objects.filter(product__in=user_products)
 
 
-@api_view(["DELETE"])
-def order_cancel_view(request: Request, order_id: int) -> Response:
-    order = Order.objects.get(id=order_id)
-    if not request.user == order.user:
-        raise PermissionDenied
+# @api_view(["DELETE"])
+# def order_cancel_view(request: Request, order_id: int) -> Response:
+#     order = Order.objects.get(id=order_id)
+#     if not request.user == order.user:
+#         raise PermissionDenied
 
-    if order.status != 1:
-        raise ValidationError(f"delete order failed: order status is '{order.status}'")
-    rollback_pay(request.user, order)
+#     if order.status != Order.Status.RECIEVED:
+#         raise ValidationError(f"delete order failed: order status is '{order.status}'")
 
-    return Response(status=status.HTTP_204_NO_CONTENT)
+#     rollback_pay(order)
+#     return Response(status=status.HTTP_204_NO_CONTENT)
