@@ -20,7 +20,7 @@ def check_product_stock(order_detail_data: Dict[str, Any]) -> None:
 
         stock = (
             product.stock
-            - OrderDetail.objects.filter(product=product).aggregate(
+            - OrderDetail.objects.filter(product=product, deleted=None).aggregate(
                 stock=Coalesce(Sum("quantity"), 0)
             )["stock"]
         )
@@ -53,7 +53,8 @@ def pay(order: Dict[str, Any], order_detail_data: Dict[str, Any]) -> None:
 def rollback_pay(order: Order) -> None:
     now = datetime.utcnow()
     order.status = Order.Status.CANCELED
+    order.deleted = now
     order.save()
 
     Wallet.objects.filter(order=order).update(deleted=now)
-    OrderDetail.object.filter(order=order).update(deleted=now)
+    OrderDetail.objects.filter(order=order).update(deleted=now)
