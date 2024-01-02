@@ -5,7 +5,11 @@ from apps.user.models import User
 
 
 class Category(TimeStampedModel):
-    name = models.CharField(verbose_name="Category Name", max_length=20, null=False)
+    name = models.CharField(
+        verbose_name="Category Name",
+        max_length=20,
+        null=False,
+    )
 
     class Meta:
         db_table = "category"
@@ -17,12 +21,25 @@ def product_image_path(instance, filename):
 
 
 class Product(TimeStampedModel):
-    name = models.CharField(verbose_name="Product Name", max_length=50, null=False)
-    price = models.IntegerField(verbose_name="Price(₩)", null=False)
-    stock = models.PositiveIntegerField(
-        verbose_name="Product Quantity", default=0, null=False
+    name = models.CharField(
+        verbose_name="Product Name",
+        max_length=50,
+        null=False,
     )
-    image = models.ImageField(upload_to=product_image_path, default=None, null=True)
+    price = models.IntegerField(
+        verbose_name="Price(₩)",
+        null=False,
+    )
+    stock = models.PositiveIntegerField(
+        verbose_name="Product Quantity",
+        default=0,
+        null=False,
+    )
+    image = models.ImageField(
+        upload_to=product_image_path,
+        default=None,
+        null=True,
+    )
     user = models.ForeignKey(
         User,
         verbose_name="Product Owner",

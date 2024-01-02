@@ -4,9 +4,9 @@ from typing import Dict
 from django.core.exceptions import PermissionDenied
 from rest_framework import serializers
 
-from apps.payment.models import Order
-from apps.payment.models import OrderDetail
-from apps.payment.models import Wallet
+from apps.payment.models.order import Order
+from apps.payment.models.order import OrderDetail
+from apps.payment.models.wallet import Wallet
 from apps.payment.services import pay
 
 

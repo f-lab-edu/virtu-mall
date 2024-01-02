@@ -8,7 +8,7 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 
-from apps.payment.models import Wallet
+from apps.payment.models.wallet import Wallet
 from apps.user.models import BuyerProfile
 from apps.user.models import StoreProfile
 from apps.user.serializers import BuyerProfileSerializer

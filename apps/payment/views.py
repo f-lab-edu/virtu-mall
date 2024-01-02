@@ -6,9 +6,9 @@ from rest_framework.response import Response
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.viewsets import ReadOnlyModelViewSet
 
-from apps.payment.models import Order
-from apps.payment.models import OrderDetail
-from apps.payment.models import Wallet
+from apps.payment.models.order import Order
+from apps.payment.models.order import OrderDetail
+from apps.payment.models.wallet import Wallet
 from apps.payment.serializers import OrderDetailSerializer
 from apps.payment.serializers import OrderSerializer
 from apps.payment.serializers import WalletSerializer
@@ -56,17 +56,6 @@ class OrderDetailViewSet(ReadOnlyModelViewSet):
     def get_queryset(self) -> QuerySet[OrderDetail]:
         user = self.request.user
         user_products = Product.objects.filter(user=user)
-        return OrderDetail.objects.filter(product__in=user_products)
-
-
-# @api_view(["DELETE"])
-# def order_cancel_view(request: Request, order_id: int) -> Response:
-#     order = Order.objects.get(id=order_id)
-#     if not request.user == order.user:
-#         raise PermissionDenied
-
-#     if order.status != Order.Status.RECIEVED:
-#         raise ValidationError(f"delete order failed: order status is '{order.status}'")
-
-#     rollback_pay(order)
-#     return Response(status=status.HTTP_204_NO_CONTENT)
+        return OrderDetail.objects.filter(product__in=user_products).order_by(
+            "-created"
+        )
