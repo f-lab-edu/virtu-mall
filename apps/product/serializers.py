@@ -23,7 +23,7 @@ class ProductSerializer(serializers.ModelSerializer):
         validated_data["user"] = self.context["request"].user
         return super().create(validated_data)
 
-    def to_representation(self, instance):
+    def to_representation(self, instance: Product) -> Product:
         representation = super(ProductSerializer, self).to_representation(instance)
         representation["stock"] = (
             instance.stock

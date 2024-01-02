@@ -44,7 +44,7 @@ class Wallet(TimeStampedModel):
         db_table = "wallet"
 
     @classmethod
-    def get_balance(cls, user):
+    def get_balance(cls, user: User) -> int:
         deposits = cls.objects.filter(
             user=user,
             transaction_type=Wallet.TransactionType.DEPOSIT,
