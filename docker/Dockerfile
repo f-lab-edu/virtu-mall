@@ -11,9 +11,7 @@ COPY --from=aohus/virtu-mall-base $PYSETUP_PATH $PYSETUP_PATH
 RUN poetry install
 
 # will become mountpoint of our code
-WORKDIR /usr/src/app
-COPY . /usr/src/app
-COPY docker/run_server.sh /usr/src/app/run_server.sh
+COPY . /opt/pysetup
 
 EXPOSE 8000
-CMD ["bash", "run_server.sh"]
+CMD ["bash", "docker/run_server.sh"]

@@ -1,4 +1,5 @@
 #!/bin/bash
 PORT=${PORT:-8000}
+WORDERS=${WORDERS:-2}
 python3 manage.py migrate
-python3 manage.py runserver 0.0.0.0:$PORT
+gunicorn --bind 0.0.0.0:$PORT --workers=$WORKERS virtumall.wsgi:application
