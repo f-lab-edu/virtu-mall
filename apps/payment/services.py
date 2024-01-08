@@ -29,7 +29,7 @@ def check_product_stock(order_detail_data: Dict[str, Any]) -> None:
 
 
 def update_wallet_transaction(
-    order: Dict[str, Any], order_detail_data: Dict[str, Any]
+    order: dict[str, Any], order_detail_data: dict[str, Any]
 ) -> None:
     balance = Wallet.get_balance(user=order["user"])
     if balance < order["total_price"]:
