@@ -59,6 +59,6 @@ class OrderSerializer(serializers.ModelSerializer):
         wallet.save()
         return order
 
-    def update(self, instance: Order, validated_data: Dict[str, Any]) -> Order:
+    def update(self, instance: Order, validated_data: dict[str, Any]) -> Order:
         instance.status = validated_data.get("status", instance.status)
         return super().update(instance, validated_data)
