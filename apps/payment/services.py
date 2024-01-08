@@ -44,7 +44,7 @@ def update_wallet_transaction(
 
 
 @transaction.atomic
-def pay(order: Dict[str, Any], order_detail_data: Dict[str, Any]) -> None:
+def pay(order: Dict[str, Any], order_detail_data: dict[str, Any]) -> None:
     check_product_stock(order_detail_data)
     return update_wallet_transaction(order, order_detail_data)
 
