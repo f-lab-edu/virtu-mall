@@ -31,7 +31,7 @@ class OrderSerializer(serializers.ModelSerializer):
         read_only_fields = ("user", "total_price", "shipping_address")
 
     def create_order_details(
-        self, order: Order, order_detail_data: Dict[str, Any]
+        self, order: Order, order_detail_data: dict[str, Any]
     ) -> None:
         OrderDetail.objects.bulk_create(
             [
