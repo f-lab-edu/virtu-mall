@@ -12,7 +12,7 @@ from apps.payment.models.order import OrderDetail
 from apps.payment.models.wallet import Wallet
 
 
-def check_product_stock(order_detail_data: Dict[str, Any]) -> None:
+def check_product_stock(order_detail_data: dict[str, Any]) -> None:
     for detail_data in order_detail_data:
         product = detail_data["product"]
         if product.deleted is not None:
