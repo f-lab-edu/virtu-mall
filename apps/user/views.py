@@ -8,6 +8,7 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 
+from apps.payment.models.wallet import Wallet
 from apps.user.models import BuyerProfile
 from apps.user.models import StoreProfile
 from apps.user.serializers import BuyerProfileSerializer
@@ -19,6 +20,10 @@ from utils.permissions import IsAdminOrOwner
 class BuyerSignUpView(CreateAPIView):
     queryset = BuyerProfile.objects.all()
     serializer_class = BuyerProfileSerializer
+
+    def perform_create(self, serializer: BuyerProfileSerializer) -> None:
+        buyerprofile = serializer.save()
+        Wallet.objects.create(user=buyerprofile.user)
 
 
 class StoreSignUpView(CreateAPIView):

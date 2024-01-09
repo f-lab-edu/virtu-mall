@@ -1,15 +1,14 @@
 from django.db import models
+from model_utils.models import TimeStampedModel
 
 from apps.user.models import User
 
 
-class Category(models.Model):
-    name = models.CharField(verbose_name="Category Name", max_length=20, null=False)
-    created_at = models.DateTimeField(
-        verbose_name="Category Created At", auto_now_add=True
-    )
-    modified_at = models.DateTimeField(
-        verbose_name="Category Modified At", auto_now=True
+class Category(TimeStampedModel):
+    name = models.CharField(
+        verbose_name="Category Name",
+        max_length=20,
+        null=False,
     )
 
     class Meta:
@@ -21,13 +20,26 @@ def product_image_path(instance, filename):
     return f"store/{instance.user}/product/{instance.name}/{filename}"
 
 
-class Product(models.Model):
-    name = models.CharField(verbose_name="Product Name", max_length=50, null=False)
-    price = models.IntegerField(verbose_name="Price(₩)", null=False)
-    stock = models.PositiveIntegerField(
-        verbose_name="Product Quantity", default=0, null=False
+class Product(TimeStampedModel):
+    name = models.CharField(
+        verbose_name="Product Name",
+        max_length=50,
+        null=False,
     )
-    image = models.ImageField(upload_to=product_image_path, default=None, null=True)
+    price = models.IntegerField(
+        verbose_name="Price(₩)",
+        null=False,
+    )
+    stock = models.PositiveIntegerField(
+        verbose_name="Product Quantity",
+        default=0,
+        null=False,
+    )
+    image = models.ImageField(
+        upload_to=product_image_path,
+        default=None,
+        null=True,
+    )
     user = models.ForeignKey(
         User,
         verbose_name="Product Owner",
@@ -39,17 +51,11 @@ class Product(models.Model):
         Category,
         verbose_name="Category",
         related_name="category",
-        on_delete=models.CASCADE,
+        on_delete=models.PROTECT,
         null=False,
     )
     description = models.TextField(verbose_name="Details", null=True)
-    created_at = models.DateTimeField(
-        verbose_name="Product Created At", auto_now_add=True
-    )
-    modified_at = models.DateTimeField(
-        verbose_name="Product Modified At", auto_now=True
-    )
-    deleted_at = models.DateTimeField(
+    deleted = models.DateTimeField(
         verbose_name="Product Deleted At", default=None, null=True
     )
 
