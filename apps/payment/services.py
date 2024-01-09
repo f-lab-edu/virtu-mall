@@ -15,12 +15,12 @@ from apps.payment.models.wallet import Wallet
 def check_product_stock(order_detail_data: dict[str, Any]) -> None:
     for detail_data in order_detail_data:
         product = detail_data["product"]
-        if product.deleted is not None:
+        if product.deleted_at is not None:
             raise ValidationError("update_product_stock failed: invalid product")
 
         stock = (
             product.stock
-            - OrderDetail.objects.filter(product=product, deleted=None).aggregate(
+            - OrderDetail.objects.filter(product=product, deleted_at=None).aggregate(
                 stock=Coalesce(Sum("quantity"), 0)
             )["stock"]
         )
@@ -51,8 +51,8 @@ def pay(order: Dict[str, Any], order_detail_data: dict[str, Any]) -> None:
 def rollback_pay(order: Order) -> None:
     now = datetime.utcnow()
     order.status = Order.Status.CANCELED
-    order.deleted = now
+    order.deleted_at = now
     order.save()
 
-    Wallet.objects.filter(order=order).update(deleted=now)
-    OrderDetail.objects.filter(order=order).update(deleted=now)
+    Wallet.objects.filter(order=order).update(deleted_at=now)
+    OrderDetail.objects.filter(order=order).update(deleted_at=now)

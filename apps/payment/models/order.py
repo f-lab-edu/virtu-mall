@@ -1,11 +1,10 @@
 from django.db import models
-from model_utils.models import TimeStampedModel
 
 from apps.product.models import Product
 from apps.user.models import User
 
 
-class Order(TimeStampedModel):
+class Order(models.Model):
     class Status(models.IntegerChoices):
         RECIEVED = 1
         PREPARING = 2
@@ -28,17 +27,19 @@ class Order(TimeStampedModel):
         max_length=255,
         null=False,
     )
-    deleted = models.DateTimeField(
+    deleted_at = models.DateTimeField(
         verbose_name="deleted at",
         default=None,
         null=True,
     )
+    created_at = models.DateTimeField(verbose_name="created at", auto_now_add=True)
+    modified_at = models.DateTimeField(verbose_name="modified at", auto_now=True)
 
     class Meta:
         db_table = "order"
 
 
-class OrderDetail(TimeStampedModel):
+class OrderDetail(models.Model):
     order = models.ForeignKey(
         Order,
         on_delete=models.CASCADE,
@@ -63,11 +64,13 @@ class OrderDetail(TimeStampedModel):
         verbose_name="total price",
         null=False,
     )
-    deleted = models.DateTimeField(
+    deleted_at = models.DateTimeField(
         verbose_name="deleted at",
         default=None,
         null=True,
     )
+    created_at = models.DateTimeField(verbose_name="created at", auto_now_add=True)
+    modified_at = models.DateTimeField(verbose_name="modified at", auto_now=True)
 
     class Meta:
         db_table = "order_detail"

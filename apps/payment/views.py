@@ -31,7 +31,7 @@ class OrderViewSet(ModelViewSet):
     permission_classes = [IsAdminOrOwner]
 
     def get_queryset(self) -> QuerySet[Order]:
-        return self.queryset.filter(user=self.request.user, deleted=None).order_by(
+        return self.queryset.filter(user=self.request.user, deleted_at=None).order_by(
             "-created"
         )
 

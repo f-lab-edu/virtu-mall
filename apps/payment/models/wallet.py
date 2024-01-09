@@ -1,13 +1,12 @@
 from django.db import models
 from django.db.models import Sum
 from django.db.models.functions import Coalesce
-from model_utils.models import TimeStampedModel
 
 from apps.payment.models.order import Order
 from apps.user.models import User
 
 
-class Wallet(TimeStampedModel):
+class Wallet(models.Model):
     class TransactionType(models.IntegerChoices):
         DEPOSIT = 0
         WITHDRAWAL = 1
@@ -34,26 +33,29 @@ class Wallet(TimeStampedModel):
         null=True,
         related_name="order_wallet",
     )
-    deleted = models.DateTimeField(
+    deleted_at = models.DateTimeField(
         verbose_name="deleted at",
         default=None,
         null=True,
     )
+    created_at = models.DateTimeField(verbose_name="created at", auto_now_add=True)
+    modified_at = models.DateTimeField(verbose_name="modified at", auto_now=True)
 
     class Meta:
         db_table = "wallet"
+        indexes = [models.Index(fields=["deleted_at"])]
 
     @classmethod
     def get_balance(cls, user: User) -> int:
         deposits = cls.objects.filter(
             user=user,
             transaction_type=Wallet.TransactionType.DEPOSIT,
-            deleted=None,
+            deleted_at=None,
         ).aggregate(amount=Coalesce(Sum("amount"), 0))["amount"]
 
         withdrawals = cls.objects.filter(
             user=user,
             transaction_type=Wallet.TransactionType.WITHDRAWAL,
-            deleted=None,
+            deleted_at=None,
         ).aggregate(amount=Coalesce(Sum("amount"), 0))["amount"]
         return deposits - withdrawals

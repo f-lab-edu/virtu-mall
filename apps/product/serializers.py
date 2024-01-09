@@ -27,7 +27,7 @@ class ProductSerializer(serializers.ModelSerializer):
         representation = super(ProductSerializer, self).to_representation(instance)
         representation["stock"] = (
             instance.stock
-            - OrderDetail.objects.filter(product=instance, deleted=None).aggregate(
+            - OrderDetail.objects.filter(product=instance, deleted_at=None).aggregate(
                 stock=Coalesce(Sum("quantity"), 0)
             )["stock"]
         )
