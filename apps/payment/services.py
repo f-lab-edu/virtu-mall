@@ -28,9 +28,7 @@ def check_product_stock(order_detail_data: dict[str, Any]) -> None:
             raise ValidationError("update_product_stock failed")
 
 
-def update_wallet_transaction(
-    order: dict[str, Any], order_detail_data: dict[str, Any]
-) -> None:
+def update_wallet_transaction(order: dict[str, Any]) -> None:
     balance = Wallet.get_balance(user=order["user"])
     if balance < order["total_price"]:
         raise ValidationError("update_wallet_transaction failed")
@@ -46,7 +44,7 @@ def update_wallet_transaction(
 @transaction.atomic
 def pay(order: Dict[str, Any], order_detail_data: dict[str, Any]) -> None:
     check_product_stock(order_detail_data)
-    return update_wallet_transaction(order, order_detail_data)
+    return update_wallet_transaction(order)
 
 
 @transaction.atomic

@@ -9,8 +9,8 @@ from apps.user.models import User
 
 class Wallet(TimeStampedModel):
     class TransactionType(models.IntegerChoices):
-        DEPOSIT = 1
-        WITHDRAWAL = 2
+        DEPOSIT = 0
+        WITHDRAWAL = 1
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     transaction_type = models.IntegerField(
