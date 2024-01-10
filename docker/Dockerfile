@@ -12,8 +12,6 @@ RUN poetry install
 
 # will become mountpoint of our code
 COPY . /opt/pysetup
-COPY .env /opt/pysetup/.env
-COPY docker/run_server.sh /opt/pysetup/run_server.sh
 
 EXPOSE 8000
-CMD ["bash", "run_server.sh"]
+CMD ["bash", "docker/run_server.sh"]

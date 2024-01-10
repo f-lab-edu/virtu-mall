@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
 import os
+from pathlib import Path
+from typing import Any
+from typing import Optional
 
 from django.core.exceptions import ImproperlyConfigured
 from dotenv import find_dotenv
@@ -19,7 +22,7 @@ from dotenv import load_dotenv
 load_dotenv(find_dotenv())
 
 
-def get_env_variable(env_key, default=None):
+def get_env_variable(env_key: str, default: Optional[Any] = None) -> str | bool | Any:
     try:
         env_value = os.environ[env_key]
         if env_value in ("True", "False"):
@@ -35,7 +38,7 @@ def get_env_variable(env_key, default=None):
 
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE_DIR = Path(__file__).resolve().parents[2]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
