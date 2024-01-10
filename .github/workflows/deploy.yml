@@ -22,6 +22,8 @@ jobs:
       run: |
         touch .env
         echo ${{secrets.DOT_ENV_FILE}} | base64 -d > .env
+        ls -al
+        pwd
 
     - name: Build and Push Docker Base Image
       uses: docker/build-push-action@v5
