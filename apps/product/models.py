@@ -16,7 +16,7 @@ class Category(models.Model):
         db_table = "category"
 
 
-def product_image_path(instance, filename):
+def product_image_path(instance, filename: str) -> str:
     # file will be uploaded to MEDIA_ROOT/
     return f"store/{instance.user}/product/{instance.name}/{filename}"
 
@@ -55,7 +55,13 @@ class Product(models.Model):
         on_delete=models.PROTECT,
         null=False,
     )
-    description = models.TextField(verbose_name="details", null=True)
+    description = models.TextField(verbose_name="Details", null=True)
+    created_at = models.DateTimeField(
+        verbose_name="Product Created At", auto_now_add=True
+    )
+    modified_at = models.DateTimeField(
+        verbose_name="Product Modified At", db_index=True, auto_now=True
+    )
     deleted_at = models.DateTimeField(
         verbose_name="product deleted at", default=None, null=True
     )
