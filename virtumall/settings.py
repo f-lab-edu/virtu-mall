@@ -63,6 +63,9 @@ INSTALLED_APPS = [
     "rest_framework",
     "utils",
     "apps.user",
+    "apps.product",
+    "apps.cart",
+    "apps.payment",
 ]
 
 MIDDLEWARE = [
@@ -94,6 +97,7 @@ TEMPLATES = [
     },
 ]
 
+
 WSGI_APPLICATION = "virtumall.wsgi.application"
 
 AUTH_USER_MODEL = "user.User"
@@ -103,8 +107,13 @@ AUTH_USER_MODEL = "user.User"
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+        "ENGINE": "django.db.backends.mysql",
+        "HOST": "127.0.0.1",
+        "NAME": "virtumall",
+        "USER": "root",
+        "PASSWORD": "virtumall",
+        "PORT": "3306",
+        "OPTIONS": {"charset": "utf8mb4"},
     }
 }
 
@@ -144,6 +153,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+
+# Actual directory user files go to
+MEDIA_ROOT = BASE_DIR / "apps/media"
+
+# URL used to access the media
+MEDIA_URL = "/media/"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
