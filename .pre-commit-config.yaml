@@ -4,6 +4,7 @@ repos:
     hooks:
       - id: isort
         exclude: ^.*\b(migrations)\b.*$
+        args: ["--profile", "black", "--filter-files"]
 
   - repo: https://github.com/ambv/black
     rev: 23.12.0

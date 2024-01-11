@@ -8,9 +8,9 @@ services:
       - ./configs/nginx.conf:/etc/nginx/nginx.conf
     container_name: virtumall-proxy
     depends_on:
-      - api
+      - virtumall_api
 
-  api:
+  virtumall_api:
     image: aohus/virtu-mall:latest
     ports:
       - 8000:8000

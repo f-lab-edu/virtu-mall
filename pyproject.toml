@@ -20,15 +20,15 @@ warn_unreachable = true
 warn_no_return = true
 exclude = ["manage.py"]
 
-[tool.pytest]
-DJANGO_SETTINGS_MODULE = "virtumall.settings.development"
-
 [tool.poetry]
 name = "virtu-mall"
 version = "0.1.0"
 description = ""
 authors = ["유수화 <dbtnghk528@gmail.com>"]
 readme = "README.md"
+
+[tool.pytest]
+DJANGO_SETTINGS_MODULE = "virtumall.settings.development"
 
 [tool.poetry.dependencies]
 python = "^3.11"
@@ -37,6 +37,7 @@ python-dotenv = "1.0.0"
 djangorestframework = "3.14.0"
 pytest-django = "4.5.2"
 requests-mock = "1.11.0"
+pillow = "10.1.0"
 mysqlclient = "^2.2.1"
 gunicorn = "^21.2.0"
 
