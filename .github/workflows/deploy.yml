@@ -57,7 +57,7 @@ jobs:
         username: ${{ secrets.AWS_EC2_USERNAME }}
         key: ${{ secrets.AWS_EC2_SSH_KEY }}
         source: "configs/nginx.conf"
-        target: "/home/ubuntu/configs"
+        target: "/home/ubuntu"
 
     - name: Deploy to AWS EC2
       uses: appleboy/ssh-action@master
