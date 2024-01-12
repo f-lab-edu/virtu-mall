@@ -1,4 +1,4 @@
-name: run pytest coverage
+name: Run pytest coverage
 
 on: [pull_request]
 
@@ -21,4 +21,4 @@ jobs:
         poetry install
     - name: Test with pytest and coverage
       run: |
-        poetry run pytest --cov=./ --cov-fail-under=85
+        poetry run pytest

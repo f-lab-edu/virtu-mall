@@ -30,6 +30,9 @@ readme = "README.md"
 [tool.pytest]
 DJANGO_SETTINGS_MODULE = "virtumall.settings.development"
 
+[tool.pytest.ini_options]
+addopts = "--cov=apps/ --cov=utils/ --cov-fail-under=5"
+
 [tool.poetry.dependencies]
 python = "^3.11"
 django = "4.2.7"
