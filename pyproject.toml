@@ -40,6 +40,7 @@ requests-mock = "1.11.0"
 pillow = "10.1.0"
 mysqlclient = "^2.2.1"
 gunicorn = "^21.2.0"
+pytest-cov = "^4.1.0"
 
 
 [build-system]
