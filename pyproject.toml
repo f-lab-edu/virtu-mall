@@ -31,7 +31,7 @@ readme = "README.md"
 DJANGO_SETTINGS_MODULE = "virtumall.settings.development"
 
 [tool.pytest.ini_options]
-addopts = "--cov=apps/ --cov=utils/ --cov-fail-under=0"
+addopts = "--cov=./ --cov-fail-under=0"
 
 [tool.poetry.dependencies]
 python = "^3.11"
