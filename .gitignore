@@ -166,3 +166,5 @@ apps/media/
 
 #secrets
 aws_pem_2023.pem
+.idea/
+locustfile.py
