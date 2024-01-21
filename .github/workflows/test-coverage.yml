@@ -1,0 +1,24 @@
+name: Run pytest coverage
+
+on: [pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Set up Python 3.11
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.11'
+    - name: Install Poetry
+      run: |
+        curl -sSL https://install.python-poetry.org | python3 -
+        echo "$HOME/.poetry/bin" >> $GITHUB_PATH
+    - name: Install dependencies using Poetry
+      run: |
+        poetry install
+    - name: Test with pytest and coverage
+      run: |
+        poetry run pytest
