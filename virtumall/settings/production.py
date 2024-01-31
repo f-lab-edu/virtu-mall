@@ -23,6 +23,10 @@ AWS_ACCESS_KEY_ID = get_env_variable("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = get_env_variable("AWS_SECRET_ACCESS_KEY")
 AWS_STORAGE_BUCKET_NAME = get_env_variable("AWS_STORAGE_BUCKET_NAME")
 
+STATIC_URL = "/static/"
+MEDIA_URL = "/media/"
+STATICFILES_DIRS = [BASE_DIR / "static"]
+
 DEFAULT_FILE_STORAGE = "utils.asset_storage.MediaStorage"
 STATICFILES_STORAGE = "utils.asset_storage.StaticStorage"
 
