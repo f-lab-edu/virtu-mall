@@ -40,6 +40,8 @@ requests-mock = "1.11.0"
 pillow = "10.1.0"
 mysqlclient = "^2.2.1"
 gunicorn = "^21.2.0"
+django-storages = "^1.14.2"
+boto3 = "^1.34.22"
 
 
 [build-system]
