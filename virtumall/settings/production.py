@@ -18,6 +18,9 @@ DATABASES = {
     },
 }
 
+CSRF_TRUSTED_ORIGINS = [
+    "http://ec2-15-164-50-94.ap-northeast-2.compute.amazonaws.com",
+]
 
 AWS_ACCESS_KEY_ID = get_env_variable("AWS_ACCESS_KEY_ID")
 AWS_SECRET_ACCESS_KEY = get_env_variable("AWS_SECRET_ACCESS_KEY")
