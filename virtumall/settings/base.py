@@ -110,7 +110,7 @@ AUTH_USER_MODEL = "user.User"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "HOST": "172.17.0.2",
+        "HOST": "mysql-db",
         "NAME": "virtumall",
         "USER": "root",
         "PASSWORD": "virtumall",
