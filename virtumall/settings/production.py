@@ -27,4 +27,4 @@ DEFAULT_FILE_STORAGE = "utils.asset_storage.MediaStorage"
 STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
 
 AWS_LOCATION = "static"
-STATICFILES_DIRS = BASE_DIR / "static"
+STATICFILES_DIRS = [BASE_DIR / "static"]
