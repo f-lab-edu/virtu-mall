@@ -168,3 +168,4 @@ apps/media/
 aws_pem_2023.pem
 locustfile.py
 .idea/
+static/

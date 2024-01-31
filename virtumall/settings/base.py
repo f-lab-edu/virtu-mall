@@ -110,7 +110,7 @@ AUTH_USER_MODEL = "user.User"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "HOST": "mysql-db",
+        "HOST": "172.17.0.2",
         "NAME": "virtumall",
         "USER": "root",
         "PASSWORD": "virtumall",
@@ -155,7 +155,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
-
+STATIC_ROOT = BASE_DIR / "static"
 # Actual directory user files go to
 MEDIA_ROOT = BASE_DIR / "apps/media"
 
@@ -166,3 +166,26 @@ MEDIA_URL = "/media/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "handlers": {
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+        },
+        "file": {
+            "level": "DEBUG",
+            "class": "logging.FileHandler",
+            "filename": "django_auth_debug.log",
+        },
+    },
+    "loggers": {
+        "django.contrib.auth": {
+            "handlers": ["console", "file"],
+            "level": "DEBUG",
+            "propagate": True,
+        },
+    },
+}
