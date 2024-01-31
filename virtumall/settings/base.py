@@ -156,6 +156,7 @@ USE_TZ = True
 
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "static"
+
 # Actual directory user files go to
 MEDIA_ROOT = BASE_DIR / "apps/media"
 
