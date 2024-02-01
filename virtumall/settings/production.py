@@ -12,9 +12,9 @@ DATABASES = {
         "NAME": get_env_variable("DB_NAME"),
         "USER": get_env_variable("DB_USER"),
         "PASSWORD": get_env_variable("DB_PASSWORD"),
+        "CONN_MAX_AGE": 60,
         "OPTIONS": {
             "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
-            "CONN_MAX_AGE": 60,
         },
     },
 }
