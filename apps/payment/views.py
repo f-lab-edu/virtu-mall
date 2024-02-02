@@ -32,7 +32,7 @@ class OrderViewSet(ModelViewSet):
 
     def get_queryset(self) -> QuerySet[Order]:
         return self.queryset.filter(user=self.request.user, deleted_at=None).order_by(
-            "-created"
+            "-created_at"
         )
 
     def perform_destroy(self, instance: Order) -> None:
@@ -57,5 +57,5 @@ class OrderDetailViewSet(ReadOnlyModelViewSet):
         user = self.request.user
         user_products = Product.objects.filter(user=user)
         return OrderDetail.objects.filter(product__in=user_products).order_by(
-            "-created"
+            "-created_at"
         )
