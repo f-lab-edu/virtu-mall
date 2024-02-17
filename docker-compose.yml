@@ -2,26 +2,26 @@ version: '3'
 services:
   virtumall_api1:
     image: aohus/virtu-mall:latest
-    ports:
-      - 8000:8000
+    expose:
+      - 8000
     container_name: virtumall1
 
   virtumall_api2:
     image: aohus/virtu-mall:latest
-    ports:
-      - 8000:8000
+    expose:
+      - 8000
     container_name: virtumall2
 
   virtumall_api3:
     image: aohus/virtu-mall:latest
-    ports:
-      - 8000:8000
+    expose:
+      - 8000
     container_name: virtumall3
 
   nginx:
     image: nginx:1.21.5-alpine
     ports:
-      - 80:80
+      - 8000:80
     volumes:
       - ./configs/nginx.conf:/etc/nginx/nginx.conf
     container_name: virtumall-proxy
