@@ -1,4 +1,4 @@
-version: '3'
+version: '3.9'
 services:
   virtumall_api1:
     image: aohus/virtu-mall:latest

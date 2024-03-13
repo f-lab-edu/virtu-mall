@@ -2,7 +2,6 @@ from typing import Any
 from typing import Dict
 
 from django.core.exceptions import PermissionDenied
-from django.db import models
 from django.db import transaction
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
