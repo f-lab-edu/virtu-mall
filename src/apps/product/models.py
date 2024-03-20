@@ -55,13 +55,7 @@ class Product(models.Model):
         on_delete=models.PROTECT,
         null=False,
     )
-    description = models.TextField(verbose_name="Details", null=True)
-    created_at = models.DateTimeField(
-        verbose_name="Product Created At", auto_now_add=True
-    )
-    modified_at = models.DateTimeField(
-        verbose_name="Product Modified At", db_index=True, auto_now=True
-    )
+    description = models.TextField(verbose_name="details", null=True)
     deleted_at = models.DateTimeField(
         verbose_name="product deleted at", default=None, null=True
     )
