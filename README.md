@@ -1,5 +1,5 @@
 <h1 align="center">virtu-mall</h1>
-<p align="center"><img width="180" src="./logo.png" alt="logo" /></p>
+<p align="center"><img width="180" src="./assets/logo.png" alt="logo" /></p>
 <p align="center">VirtuMall는 파이썬으로 작성한, 쇼핑몰 프로젝트 입니다.</p>
 <p align="center">효율적이고 안정적인 API를 제공하여 사용자가 손쉽게 다양한 쇼핑  관련 작업을 수행할 수 있도록 하는 목적을 가지고 있습니다.</p>
 
@@ -24,19 +24,19 @@ Django  | 4.2.7
 
 1. 프로젝트 종속성을 설치합니다.
 ```shell
-poetry install
+poetry install --no-root
 ```
 
 2. 데이터베이스를 마이그레이션합니다.
 ```shell
-poetry run python manage.py makemigrations
-poetry run python manage.py migrate
+poetry run python src/manage.py makemigrations
+poetry run python src/manage.py migrate
 ```
 
 3. 어드민에서 필요한 추가 설정을 위해 관리자 계정 생성 후 서버를 실행합니다.
 ```shell
-poetry run python manage.py createsuperuser
-poetry run python manage.py runserver
+poetry run python src/manage.py createsuperuser
+poetry run python src/manage.py runserver
 ```
 서버가 성공적으로 시작되면, 브라우저에서 `http://localhost:8000`을 통해 접근할 수 있습니다.
 
