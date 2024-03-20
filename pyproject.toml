@@ -38,10 +38,12 @@ djangorestframework = "3.14.0"
 pytest-django = "4.5.2"
 requests-mock = "1.11.0"
 pillow = "10.1.0"
-mysqlclient = "^2.2.1"
+mysqlclient = "^2.2.4"
 gunicorn = "^21.2.0"
 django-storages = "^1.14.2"
 boto3 = "^1.34.22"
+django-silk = "^5.1.0"
+locust = "^2.24.0"
 
 
 [build-system]

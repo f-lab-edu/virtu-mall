@@ -1,5 +1,23 @@
-version: '3'
+version: '3.0'
 services:
+  virtumall_api1:
+    image: aohus/virtu-mall:latest
+    expose:
+      - 8000
+    container_name: virtumall1
+
+  virtumall_api2:
+    image: aohus/virtu-mall:latest
+    expose:
+      - 8000
+    container_name: virtumall2
+
+  virtumall_api3:
+    image: aohus/virtu-mall:latest
+    expose:
+      - 8000
+    container_name: virtumall3
+
   nginx:
     image: nginx:1.21.5-alpine
     ports:
@@ -8,10 +26,6 @@ services:
       - ./configs/nginx.conf:/etc/nginx/nginx.conf
     container_name: virtumall-proxy
     depends_on:
-      - virtumall_api
-
-  virtumall_api:
-    image: aohus/virtu-mall:latest
-    ports:
-      - 8000:8000
-    container_name: virtumall
+      - virtumall_api1
+      - virtumall_api2
+      - virtumall_api3
