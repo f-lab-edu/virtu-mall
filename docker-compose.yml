@@ -22,4 +22,3 @@ services:
     depends_on:
       - virtumall_api1
       - virtumall_api2
-      - virtumall_api3
