@@ -12,12 +12,6 @@ services:
       - 8000
     container_name: virtumall2
 
-  virtumall_api3:
-    image: aohus/virtu-mall:latest
-    expose:
-      - 8000
-    container_name: virtumall3
-
   nginx:
     image: nginx:1.21.5-alpine
     ports:
@@ -28,4 +22,3 @@ services:
     depends_on:
       - virtumall_api1
       - virtumall_api2
-      - virtumall_api3
