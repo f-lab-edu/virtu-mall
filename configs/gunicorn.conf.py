@@ -1,5 +1,4 @@
 import os
-from datetime import datetime
 
 if not os.path.exists("./log/gunicorn/"):
     os.makedirs("./log/gunicorn/")
@@ -13,6 +12,6 @@ proc_name = "virtumall"
 dogstatsd_tags = "virtumall"
 
 reload = True
-accesslog = f"./log/gunicorn/access_{datetime.now().strftime('%Y-%m-%d')}.log"
-errorlog = f"./log/gunicorn/error_{datetime.now().strftime('%Y-%m-%d')}.log"
+accesslog = "./log/gunicorn/access.log"
+errorlog = "./log/gunicorn/error.log"
 loglevel = "info"
