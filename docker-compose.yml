@@ -2,6 +2,8 @@ version: '3.0'
 services:
   virtumall_api1:
     image: aohus/virtu-mall:latest
+    volumes:
+      - /var/log/gunicorn/:/opt/pysetup/log/gunicorn/
     expose:
       - 8000
     container_name: virtumall1
@@ -10,6 +12,8 @@ services:
     image: aohus/virtu-mall:latest
     expose:
       - 8000
+    volumes:
+      - /var/log/gunicorn/:/opt/pysetup/log/gunicorn/
     container_name: virtumall2
 
   nginx:

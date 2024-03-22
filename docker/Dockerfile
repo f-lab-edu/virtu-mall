@@ -12,6 +12,7 @@ RUN poetry install
 
 # will become mountpoint of our code
 COPY docker/run_server.sh /opt/pysetup/run_server.sh
+COPY configs/gunicorn.conf.py /opt/pysetup/gunicorn.conf.py
 COPY .env /opt/pysetup/.env
 COPY src/ /opt/pysetup/
 EXPOSE 8000
