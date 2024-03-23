@@ -66,6 +66,7 @@ jobs:
         username: ${{ secrets.AWS_EC2_USERNAME }}
         key: ${{ secrets.AWS_EC2_SSH_KEY }}
         script: |
-          docker pull aohus/virtu-mall
           docker-compose down
+          docker rmi $(docker images -qa)
+          docker pull aohus/virtu-mall
           docker-compose up -d
