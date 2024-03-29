@@ -155,7 +155,7 @@ dmypy.json
 cython_debug/
 
 # django local file storage
-apps/media/
+src/apps/media/
 
 
 # PyCharm

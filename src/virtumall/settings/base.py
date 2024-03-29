@@ -66,6 +66,7 @@ BUILTIN_APPS = [
 THIRD_PARTY_APPS = [
     "rest_framework",
     "storages",
+    "debug_toolbar",
     "silk",
 ]
 
@@ -81,6 +82,7 @@ LOCAL_APPS = [
 INSTALLED_APPS = BUILTIN_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
+    "debug_toolbar.middleware.DebugToolbarMiddleware",  # 순서 바뀌면 안 됨.
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "utils.middleware.HealthCheckMiddleware",
@@ -89,7 +91,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "silk.middleware.SilkyMiddleware",
+    # "silk.middleware.SilkyMiddleware",
 ]
 
 ROOT_URLCONF = "virtumall.urls"
@@ -234,3 +236,5 @@ for local_app_directory in LOCAL_APP_DIRECTORIES:
         "level": "DEBUG",
         "propagate": True,
     }
+
+INTERNAL_IPS = ["127.0.0.1", "0.0.0.0"]
