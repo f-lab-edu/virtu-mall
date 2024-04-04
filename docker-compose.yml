@@ -2,18 +2,24 @@ version: '3.0'
 services:
   virtumall_api1:
     image: aohus/virtu-mall:latest
+    environment:
+      DJANGO_SETTINGS_MODULE: virtumall.settings.production
     expose:
       - 8000
     container_name: virtumall1
 
   virtumall_api2:
     image: aohus/virtu-mall:latest
+    environment:
+      DJANGO_SETTINGS_MODULE: virtumall.settings.production
     expose:
       - 8000
     container_name: virtumall2
 
   virtumall_api3:
     image: aohus/virtu-mall:latest
+    environment:
+      DJANGO_SETTINGS_MODULE: virtumall.settings.production
     expose:
       - 8000
     container_name: virtumall3
