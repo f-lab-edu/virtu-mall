@@ -28,7 +28,7 @@ urlpatterns = [
     path("payment/", include("apps.payment.urls")),
     path("search/", include("apps.search.urls")),
     path("admin/", admin.site.urls),
-    # path("silk/", include("silk.urls", namespace="silk")),
+    path("silk/", include("silk.urls", namespace="silk")),
     path("__debug__/", include("debug_toolbar.urls")),
 ]
 
