@@ -66,6 +66,5 @@ class Product(models.Model):
         db_table = "product"
         ordering = ["-created_at"]
         indexes = [
-            models.Index(fields=["-name"]),
             models.Index(fields=["-created_at"]),
         ]
