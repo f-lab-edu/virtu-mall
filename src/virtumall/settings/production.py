@@ -1,5 +1,3 @@
-from utils.lookups import *  # noqa
-
 from .base import *  # noqa
 
 DEBUG = False
@@ -17,6 +15,8 @@ DATABASES = {
         "CONN_MAX_AGE": 30,
         "OPTIONS": {
             "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
+            "isolation_level": "READ COMMITTED",
+            # "isolation_level": "REPEATABLE READ"
         },
     },
 }
