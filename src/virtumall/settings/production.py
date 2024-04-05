@@ -1,5 +1,3 @@
-from utils.lookups import *  # noqa
-
 from .base import *  # noqa
 
 DEBUG = False
