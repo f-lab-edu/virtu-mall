@@ -1,0 +1,22 @@
+version: '3.0'
+services:
+  virtumall_api:
+    image: aohus/virtu-mall:latest
+    environment:
+      DJANGO_SETTINGS_MODULE: virtumall.settings.local
+    ports:
+      - "8000:8000"
+    container_name: virtumall
+
+  mysql:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: virtumall1225
+      MYSQL_DATABASE: virtumall
+    command:
+      - --default-authentication-plugin=mysql_native_password
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_unicode_ci
+      - --innodb_lock_wait_timeout=1
+    ports:
+      - "3306:3306"

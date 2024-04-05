@@ -19,6 +19,8 @@ from django.core.exceptions import ImproperlyConfigured
 from dotenv import find_dotenv
 from dotenv import load_dotenv
 
+from utils.lookups import *  # noqa
+
 load_dotenv(find_dotenv())
 
 
@@ -48,9 +50,6 @@ SECRET_KEY = get_env_variable("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-ALLOWED_HOSTS = ["127.0.0.1", "localhost", "0.0.0.0"]
-
 
 # Application definition
 
@@ -116,16 +115,6 @@ TEMPLATES = [
 WSGI_APPLICATION = "virtumall.wsgi.application"
 
 AUTH_USER_MODEL = "user.User"
-
-# Database
-# https://docs.djangoproject.com/en/4.2/ref/settings/#databases
-
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
-}
 
 
 # Password validation
