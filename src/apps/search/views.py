@@ -13,6 +13,6 @@ class SearchListAPIView(ListAPIView):
     def get_queryset(self):
         query = self.request.query_params.get("q", "")
         if query:
-            return Product.objects.filter(name__icontains=query)
+            return Product.objects.filter(name__search=query)
         else:
             return Product.objects.none()

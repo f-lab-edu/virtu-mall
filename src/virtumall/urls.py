@@ -29,6 +29,7 @@ urlpatterns = [
     path("search/", include("apps.search.urls")),
     path("admin/", admin.site.urls),
     # path("silk/", include("silk.urls", namespace="silk")),
+    path("__debug__/", include("debug_toolbar.urls")),
 ]
 
 if settings.DEBUG:

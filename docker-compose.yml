@@ -4,12 +4,16 @@ services:
     image: aohus/virtu-mall:latest
     volumes:
       - /var/log/gunicorn/:/opt/pysetup/log/gunicorn/
+    environment:
+      DJANGO_SETTINGS_MODULE: virtumall.settings.production
     expose:
       - 8000
     container_name: virtumall1
 
   virtumall_api2:
     image: aohus/virtu-mall:latest
+    environment:
+      DJANGO_SETTINGS_MODULE: virtumall.settings.production
     expose:
       - 8000
     volumes:

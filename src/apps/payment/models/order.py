@@ -37,6 +37,9 @@ class Order(models.Model):
 
     class Meta:
         db_table = "order"
+        indexes = [
+            models.Index(fields=["-created_at"]),
+        ]
 
 
 class OrderDetail(models.Model):

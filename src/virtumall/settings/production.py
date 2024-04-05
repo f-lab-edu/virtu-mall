@@ -1,4 +1,6 @@
-from .base import *
+from utils.lookups import *  # noqa
+
+from .base import *  # noqa
 
 DEBUG = False
 
@@ -12,7 +14,7 @@ DATABASES = {
         "NAME": get_env_variable("DB_NAME"),
         "USER": get_env_variable("DB_USER"),
         "PASSWORD": get_env_variable("DB_PASSWORD"),
-        "CONN_MAX_AGE": 60,
+        "CONN_MAX_AGE": 30,
         "OPTIONS": {
             "init_command": "SET sql_mode='STRICT_TRANS_TABLES'",
             "isolation_level": "READ COMMITTED",
@@ -22,7 +24,7 @@ DATABASES = {
 }
 
 CSRF_TRUSTED_ORIGINS = [
-    "http://ec2-15-164-50-94.ap-northeast-2.compute.amazonaws.com",
+    "http://http://ec2-3-38-119-238.ap-northeast-2.compute.amazonaws.com/",
 ]
 
 AWS_ACCESS_KEY_ID = get_env_variable("AWS_ACCESS_KEY_ID")

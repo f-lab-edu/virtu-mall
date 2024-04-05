@@ -64,4 +64,6 @@ class Product(models.Model):
 
     class Meta:
         db_table = "product"
-        unique_together = ("name", "user")
+        indexes = [
+            models.Index(fields=["-created_at"]),
+        ]
