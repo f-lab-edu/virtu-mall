@@ -12,10 +12,6 @@ class CartSerializer(serializers.ModelSerializer):
         model = Cart
         read_only_fields = ("user",)
 
-    def create(self, validated_data: dict[str, Any]) -> Cart:
-        validated_data["user"] = self.context["request"].user
-        return super().create(validated_data)
-
     def update(self, instance: Cart, validated_data: Dict[str, Any]) -> Cart:
         validated_data["user"] = self.context["request"].user
         quantity = validated_data.get("quantity", instance.quantity)

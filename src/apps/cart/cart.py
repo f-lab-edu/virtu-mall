@@ -117,10 +117,9 @@ class DBCart(BaseCart):
         )
 
         if override_quantity:
-            cart_item.quantity = quantity
+            request.data["quantity"] = quantity
         else:
-            cart_item.quantity += quantity
-        cart_item.save()
+            request.data["quantity"] += quantity
 
         if created:
             cart_item.save()
