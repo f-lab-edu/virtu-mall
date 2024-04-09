@@ -108,9 +108,23 @@ class DBCart(BaseCart):
         self.instance = instance
 
     def add(self, request, *args, **kwargs):
-        try:
-            self.instance.create(request, *args, **kwargs)
-        except:
+        product = get_object_or_404(Product, id=request.data.get("product"))
+        quantity = request.data.get("quantity", 1)
+        override_quantity = request.data.get("override", False)
+
+        cart_item, created = Cart.objects.get_or_create(
+            user=self.user, product=product, defaults={"quantity": quantity}
+        )
+
+        if override_quantity:
+            cart_item.quantity = quantity
+        else:
+            cart_item.quantity += quantity
+        cart_item.save()
+
+        if created:
+            cart_item.save()
+        else:
             self.instance.update(request, *args, **kwargs)
 
     def remove(self, request, *args, **kwargs):
