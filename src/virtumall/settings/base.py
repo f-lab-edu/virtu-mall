@@ -115,6 +115,8 @@ WSGI_APPLICATION = "virtumall.wsgi.application"
 
 AUTH_USER_MODEL = "user.User"
 
+CART_SESSION_ID = "cart"
+
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

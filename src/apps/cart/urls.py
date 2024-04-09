@@ -1,8 +1,18 @@
-from rest_framework.routers import DefaultRouter
+from django.urls import path
 
 from . import views
 
-router = DefaultRouter()
-router.register(r"", views.CartViewSet)
-
-urlpatterns = router.urls
+urlpatterns = [
+    path(
+        "",
+        views.CartViewSet.as_view({"get": "list"}),
+    ),
+    path(
+        "add/",
+        views.CartViewSet.as_view({"post": "add"}),
+    ),
+    path(
+        "remove/",
+        views.CartViewSet.as_view({"post": "remove"}),
+    ),
+]
