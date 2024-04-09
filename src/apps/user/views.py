@@ -8,6 +8,7 @@ from rest_framework.generics import CreateAPIView
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 
+from apps.cart.models import Cart
 from apps.payment.models.wallet import Wallet
 from apps.user.models import BuyerProfile
 from apps.user.models import StoreProfile
@@ -24,6 +25,7 @@ class BuyerSignUpView(CreateAPIView):
     def perform_create(self, serializer: BuyerProfileSerializer) -> None:
         buyerprofile = serializer.save()
         Wallet.objects.create(user=buyerprofile.user)
+        Cart.objects.create(user=buyerprofile.user)
 
 
 class StoreSignUpView(CreateAPIView):
