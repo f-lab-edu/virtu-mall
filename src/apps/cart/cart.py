@@ -11,11 +11,11 @@ from apps.product.models import Product
 
 class BaseCart(ABC):
     @abstractmethod
-    def add(self, product, quantity, override_quantity=False):
+    def add(self, request, *args, **kwargs):
         pass
 
     @abstractmethod
-    def remove(self, product):
+    def remove(self, request, *args, **kwargs):
         pass
 
     @abstractmethod
@@ -57,7 +57,7 @@ class SessionCart(BaseCart):
         """
         return sum(item["quantity"] for item in self.cart.values())
 
-    def add(self, request):
+    def add(self, request, *args, **kwargs):
         """
         Add a product to the cart or update its quantity.
         """
@@ -78,7 +78,7 @@ class SessionCart(BaseCart):
         # mark the session as "modified" to make sure it gets saved
         self.session.modified = True
 
-    def remove(self, request):
+    def remove(self, request, *args, **kwargs):
         """
         Remove a product from the cart.
         """
