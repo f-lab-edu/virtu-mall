@@ -30,16 +30,6 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = ["user", "total_price", "shipping_address", "order_detail"]
         read_only_fields = ("user", "total_price", "shipping_address")
 
-    def create_order_details(
-        self, order: Order, order_detail_data: dict[str, Any]
-    ) -> None:
-        OrderDetail.objects.bulk_create(
-            [
-                OrderDetail(order=order, **detail_data)
-                for detail_data in order_detail_data
-            ]
-        )
-
     def create(self, validated_data: Dict[str, Any]) -> Order:
         user = self.context["request"].user
         if not user.is_buyer:

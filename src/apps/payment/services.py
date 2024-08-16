@@ -28,11 +28,14 @@ def check_product_stock(order_detail_data: dict[str, Any]) -> None:
             raise ValidationError("update_product_stock failed")
 
 
-def update_wallet_transaction(order: dict[str, Any]) -> None:
+def update_wallet_transaction(
+    order: dict[str, Any], order_detail_data: dict[str, Any]
+) -> None:
     balance = Wallet.get_balance(user=order["user"])
     if balance < order["total_price"]:
         raise ValidationError("update_wallet_transaction failed")
 
+    create_order_details(order, order_detail_data)
     return Wallet.objects.create(
         user=order["user"],
         transaction_type=Wallet.TransactionType.WITHDRAWAL,
@@ -41,10 +44,16 @@ def update_wallet_transaction(order: dict[str, Any]) -> None:
     )
 
 
+def create_order_details(self, order: Order, order_detail_data: dict[str, Any]) -> None:
+    OrderDetail.objects.bulk_create(
+        [OrderDetail(order=order, **detail_data) for detail_data in order_detail_data]
+    )
+
+
 @transaction.atomic
 def pay(order: Dict[str, Any], order_detail_data: dict[str, Any]) -> None:
     check_product_stock(order_detail_data)
-    return update_wallet_transaction(order)
+    return update_wallet_transaction(order, order_detail_data)
 
 
 @transaction.atomic
