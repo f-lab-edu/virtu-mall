@@ -47,7 +47,11 @@ class WalletManager:
 
 
 class OrderDetailManager:
+    def __init__(self, stock_checker: StockChecker):
+        self.stock_checker = stock_checker
+
     def create(self, order: dict[str, Any], order_detail_data: dict[str, Any]) -> None:
+        self.stock_checker.check_stock(order_detail_data)
         OrderDetail.objects.bulk_create(
             [
                 OrderDetail(order=order, **detail_data)
@@ -62,19 +66,16 @@ class OrderDetailManager:
 class PayService:
     def __init__(
         self,
-        stock_checker: StockChecker,
-        wallet_manager: WalletManager,
         order_detail_manager: OrderDetailManager,
+        wallet_manager: WalletManager,
     ):
-        self.stock_checker = stock_checker
-        self.wallet_manager = wallet_manager
         self.order_detail_manager = order_detail_manager
+        self.wallet_manager = wallet_manager
 
     @transaction.atomic
     def pay(self, order: Dict[str, Any], order_detail_data: dict[str, Any]) -> None:
-        self.stock_checker.check_stock(order_detail_data)
-        self.wallet_manager.update_transaction(order)
         self.order_detail_manager.create(order, order_detail_data)
+        self.wallet_manager.update_transaction(order)
 
     @transaction.atomic
     def rollback_pay(self, order: Order) -> None:
@@ -88,6 +89,6 @@ class PayService:
 
 
 stock_checker = StockChecker()
+order_detail_manager = OrderDetailManager(stock_checker)
 wallet_manager = WalletManager()
-order_detail_manager = OrderDetailManager()
-pay_service = PayService(stock_checker, wallet_manager, order_detail_manager)
+pay_service = PayService(wallet_manager, order_detail_manager)
