@@ -1,45 +1,45 @@
-# name: Docker Build and Push
-# # on:
-# #   push:
-# #     branches: [ main ]
-# on: [push]
+name: Docker Build and Push
+# on:
+#   push:
+#     branches: [ main ]
+on: [push]
 
-# jobs:
-#   build-and-deploy:
-#     runs-on: ubuntu-latest
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
 
-#     steps:
-#     - name: Checkout Repository
-#       uses: actions/checkout@v4
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
 
-#     - name: Login to Docker Hub
-#       uses: docker/login-action@v3
-#       with:
-#         username: ${{ secrets.DOCKER_HUB_USERNAME }}
-#         password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKER_HUB_USERNAME }}
+        password: ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
 
-#     - name: Create env file
-#       run: |
-#         touch .env
-#         echo ${{secrets.DOT_ENV_FILE}} | base64 -d > .env
-#         cat .env
+    - name: Create env file
+      run: |
+        touch .env
+        echo ${{secrets.DOT_ENV_FILE}} | base64 -d > .env
+        cat .env
 
-#     - name: Build and Push Docker Base Image
-#       uses: docker/build-push-action@v5
-#       with:
-#         context: .
-#         file: ./docker/Dockerfile.base
-#         push: true
-#         tags: aohus/virtu-mall-base:latest
+    - name: Build and Push Docker Base Image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./docker/Dockerfile.base
+        push: true
+        tags: aohus/virtu-mall-base:latest
 
-#     - name: Build and Push Docker App Image
-#       uses: docker/build-push-action@v5
-#       with:
-#         context: .
-#         file: ./docker/Dockerfile
-#         push: true
-#         tags: aohus/virtu-mall:latest
-#         no-cache: true
+    - name: Build and Push Docker App Image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        file: ./docker/Dockerfile
+        push: true
+        tags: aohus/virtu-mall:latest
+        no-cache: true
 
 #     - name: Copy docker-compose.yml to Server
 #       uses: appleboy/scp-action@master
