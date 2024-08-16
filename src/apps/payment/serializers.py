@@ -7,7 +7,7 @@ from rest_framework import serializers
 from apps.payment.models.order import Order
 from apps.payment.models.order import OrderDetail
 from apps.payment.models.wallet import Wallet
-from apps.payment.services import pay
+from apps.payment.services import pay_service
 
 
 class WalletSerializer(serializers.ModelSerializer):
@@ -41,10 +41,9 @@ class OrderSerializer(serializers.ModelSerializer):
         validated_data["total_price"] = sum(
             [order_detail["total_price"] for order_detail in order_detail_data]
         )
-        wallet = pay(validated_data, order_detail_data)
+        wallet = pay_service(validated_data, order_detail_data)
 
         order = super().create(validated_data)
-        self.create_order_details(order, order_detail_data)
         wallet.order = order
         wallet.save()
         return order

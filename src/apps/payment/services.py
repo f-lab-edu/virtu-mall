@@ -12,56 +12,82 @@ from apps.payment.models.order import OrderDetail
 from apps.payment.models.wallet import Wallet
 
 
-def check_product_stock(order_detail_data: dict[str, Any]) -> None:
-    for detail_data in order_detail_data:
-        product = detail_data["product"]
-        if product.deleted_at is not None:
-            raise ValidationError("update_product_stock failed: invalid product")
+class StockChecker:
+    def check_stock(self, order_detail_data: dict[str, Any]) -> None:
+        for detail_data in order_detail_data:
+            product = detail_data["product"]
+            if product.deleted_at is not None:
+                raise ValidationError("update_product_stock failed: invalid product")
 
-        stock = (
-            product.stock
-            - OrderDetail.objects.filter(product=product, deleted_at=None).aggregate(
-                stock=Coalesce(Sum("quantity"), 0)
-            )["stock"]
+            stock = (
+                product.stock
+                - OrderDetail.objects.filter(
+                    product=product, deleted_at=None
+                ).aggregate(stock=Coalesce(Sum("quantity"), 0))["stock"]
+            )
+            if detail_data["quantity"] > stock:
+                raise ValidationError("update_product_stock failed")
+
+
+class WalletManager:
+    def update_transaction(self, order: dict[str, Any]) -> None:
+        balance = Wallet.get_balance(user=order["user"])
+        if balance < order["total_price"]:
+            raise ValidationError("update_wallet_transaction failed")
+
+        return Wallet.objects.create(
+            user=order["user"],
+            transaction_type=Wallet.TransactionType.WITHDRAWAL,
+            amount=order["total_price"],
+            mileage=order["total_price"] * 0.03,
         )
-        if detail_data["quantity"] > stock:
-            raise ValidationError("update_product_stock failed")
+
+    def delete_transaction(self, order: Order) -> None:
+        Wallet.objects.filter(order=order).update(deleted_at=order.deleted_at)
 
 
-def update_wallet_transaction(
-    order: dict[str, Any], order_detail_data: dict[str, Any]
-) -> None:
-    balance = Wallet.get_balance(user=order["user"])
-    if balance < order["total_price"]:
-        raise ValidationError("update_wallet_transaction failed")
+class OrderDetailManager:
+    def create(self, order: dict[str, Any], order_detail_data: dict[str, Any]) -> None:
+        OrderDetail.objects.bulk_create(
+            [
+                OrderDetail(order=order, **detail_data)
+                for detail_data in order_detail_data
+            ]
+        )
 
-    create_order_details(order, order_detail_data)
-    return Wallet.objects.create(
-        user=order["user"],
-        transaction_type=Wallet.TransactionType.WITHDRAWAL,
-        amount=order["total_price"],
-        mileage=order["total_price"] * 0.03,
-    )
+    def delete(self, order: Order) -> None:
+        OrderDetail.objects.filter(order=order).update(deleted_at=order.deleted_at)
 
 
-def create_order_details(self, order: Order, order_detail_data: dict[str, Any]) -> None:
-    OrderDetail.objects.bulk_create(
-        [OrderDetail(order=order, **detail_data) for detail_data in order_detail_data]
-    )
+class PayService:
+    def __init__(
+        self,
+        stock_checker: StockChecker,
+        wallet_manager: WalletManager,
+        order_detail_manager: OrderDetailManager,
+    ):
+        self.stock_checker = stock_checker
+        self.wallet_manager = wallet_manager
+        self.order_detail_manager = order_detail_manager
+
+    @transaction.atomic
+    def pay(self, order: Dict[str, Any], order_detail_data: dict[str, Any]) -> None:
+        self.stock_checker.check_stock(order_detail_data)
+        self.wallet_manager.update_transaction(order)
+        self.order_detail_manager.create(order, order_detail_data)
+
+    @transaction.atomic
+    def rollback_pay(self, order: Order) -> None:
+        now = datetime.utcnow()
+        order.status = Order.Status.CANCELED
+        order.deleted_at = now
+        order.save()
+
+        self.wallet_manager.delete_transaction(order)
+        self.order_detail_manager.delete(order)
 
 
-@transaction.atomic
-def pay(order: Dict[str, Any], order_detail_data: dict[str, Any]) -> None:
-    check_product_stock(order_detail_data)
-    return update_wallet_transaction(order, order_detail_data)
-
-
-@transaction.atomic
-def rollback_pay(order: Order) -> None:
-    now = datetime.utcnow()
-    order.status = Order.Status.CANCELED
-    order.deleted_at = now
-    order.save()
-
-    Wallet.objects.filter(order=order).update(deleted_at=now)
-    OrderDetail.objects.filter(order=order).update(deleted_at=now)
+stock_checker = StockChecker()
+wallet_manager = WalletManager()
+order_detail_manager = OrderDetailManager()
+pay_service = PayService(stock_checker, wallet_manager, order_detail_manager)

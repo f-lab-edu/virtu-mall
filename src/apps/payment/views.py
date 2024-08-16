@@ -12,7 +12,7 @@ from apps.payment.models.wallet import Wallet
 from apps.payment.serializers import OrderDetailSerializer
 from apps.payment.serializers import OrderSerializer
 from apps.payment.serializers import WalletSerializer
-from apps.payment.services import rollback_pay
+from apps.payment.services import pay_service
 from apps.product.models import Product
 from utils.permissions import IsAdminOrOwner
 from utils.permissions import IsStore
@@ -44,7 +44,7 @@ class OrderViewSet(ModelViewSet):
                 f"delete order failed: order status is '{instance.status}'"
             )
 
-        rollback_pay(instance)
+        pay_service.rollback_pay(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
 
 
