@@ -3,8 +3,6 @@ from typing import Any
 from typing import Dict
 
 from django.db import transaction
-from django.db.models import Sum
-from django.db.models.functions import Coalesce
 from rest_framework.exceptions import ValidationError
 
 from apps.payment.models.order import Order
@@ -19,13 +17,7 @@ class StockChecker:
             if product.deleted_at is not None:
                 raise ValidationError("update_product_stock failed: invalid product")
 
-            stock = (
-                product.stock
-                - OrderDetail.objects.filter(
-                    product=product, deleted_at=None
-                ).aggregate(stock=Coalesce(Sum("quantity"), 0))["stock"]
-            )
-            if detail_data["quantity"] > stock:
+            if detail_data["quantity"] > product.stock:
                 raise ValidationError("update_product_stock failed")
 
 
