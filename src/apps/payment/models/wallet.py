@@ -5,7 +5,7 @@ from apps.user.models import User
 
 class Wallet(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    amount = models.PositiveIntegerField(
+    balance = models.PositiveIntegerField(
         verbose_name="amount",
         default=0,
         null=False,
@@ -29,4 +29,4 @@ class Wallet(models.Model):
 
     @classmethod
     def get_balance(cls, user: User) -> int:
-        return cls.objects.get(user=user, deleted_at=None).amount
+        return cls.objects.get(user=user, deleted_at=None).balance
