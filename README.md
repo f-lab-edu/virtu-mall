@@ -35,6 +35,22 @@ docker-compose -f docker-compose-local.yml up
 
 컨테이너가 실행되면, 브라우저에서 `http://0.0.0.0:8000`을 통해 접근할 수 있습니다.
 
+cf)
+`Exception: Can not find valid pkg-config name.
+Specify MYSQLCLIENT_CFLAGS and MYSQLCLIENT_LDFLAGS env vars manually`
+위와 같은 에러가 발생한다면, 아래 패키치 설치를 통해 해결하세요. 
+
+- macOS
+```shell
+brew install mysql pkg-config
+```
+
+- Linux
+```shell
+sudo apt-get install python3-dev default-libmysqlclient-dev build-essential pkg-config
+```
+
+
 ### Testing
 
 - TBD.
