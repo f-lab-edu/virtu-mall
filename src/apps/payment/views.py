@@ -35,7 +35,27 @@ class OrderViewSet(ModelViewSet):
             "-created_at"
         )
 
-    def perform_destroy(self, instance: Order) -> None:
+    def create(self, request, *args, **kwargs) -> Response:
+        user = self.request.user
+        if not user.is_buyer:
+            raise PermissionDenied
+
+        order_detail_data = request.data.get("order_detail", [])
+        total_price = self._calculate_total_price(order_detail_data)
+
+        self._prepare_request_data(request, user, total_price)
+
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        pay_service.pay(request.data, order_detail_data)
+
+        self.perform_create(serializer)
+        headers = self.get_success_headers(serializer.data)
+        return Response(
+            serializer.data, status=status.HTTP_201_CREATED, headers=headers
+        )
+
+    def perform_destroy(self, instance: Order) -> Response:
         if not self.request.user == instance.user:
             raise PermissionDenied
 
@@ -46,6 +66,18 @@ class OrderViewSet(ModelViewSet):
 
         pay_service.rollback_pay(instance)
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    def _calculate_total_price(self, order_detail_data: dict[str, any]) -> int:
+        return sum([item.get("total_price", 0) for item in order_detail_data])
+
+    def _prepare_request_data(self, request, user, total_price):
+        request.data.update(
+            {
+                "user": user.id,
+                "total_price": total_price,
+                "shipping_address": user.address,
+            }
+        )
 
 
 class OrderDetailViewSet(ReadOnlyModelViewSet):
